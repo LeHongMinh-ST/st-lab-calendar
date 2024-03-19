@@ -21,12 +21,16 @@
 
     .login-image {
         width: 400px;
+        @include sp {
+            width: 300px;
+        }
     }
 
     .login-image-wrapper {
+        padding: 20px;
         text-align: center;
         @include sp {
-            display: none;
+            //display: none;
         }
 
         .line {
@@ -43,6 +47,12 @@
 
             width: 100%;
             padding: 20px;
+        }
+    }
+
+    .login-row {
+        @include sp {
+            flex-wrap: wrap-reverse;
         }
     }
 }

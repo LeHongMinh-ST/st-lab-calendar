@@ -2,7 +2,7 @@
     <div class="content login-wrapper">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row login-row">
                     <div class="col-xl-6">
                         <div class="login-image-wrapper">
                             <img class="login-image" src="{{asset('assets/images/login.png')}}" alt="login">
