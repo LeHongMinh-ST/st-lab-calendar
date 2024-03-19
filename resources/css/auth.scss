@@ -37,9 +37,11 @@
         }
     }
 
-    .form-login {
-        width: 100%;
+    .login-form {
+        margin: 0 auto;
         @include sp {
+
+            width: 100%;
             padding: 20px;
         }
     }
