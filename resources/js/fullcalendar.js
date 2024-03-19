@@ -56,7 +56,8 @@ const FullCalendarBasic = function() {
             {
                 title: 'Meeting',
                 start: '2020-09-12T10:30:00',
-                end: '2020-09-12T12:30:00'
+                end: '2020-09-12T12:30:00',
+                image_url: '/assets/images/logoST.jpg'
             },
             {
                 title: 'Lunch',
@@ -111,15 +112,38 @@ const FullCalendarBasic = function() {
                 nowIndicator: true,
                 weekNumberCalculation: 'ISO',
                 editable: true,
-                // timelineDay: {
-                //     slotLabelFormat: ['H:mm'],
-                // },
-                // slotMinTime:"21:00:00",
-                // slotMaxTime:"06:00:00",
+                timelineDay: {
+                    slotLabelFormat: ['H:mm'],
+                },
+                height: 'auto',
+                slotMinTime: "07:00",
+                slotMaxTime: "20:00",
                 selectable: true,
                 // direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
                 dayMaxEvents: true, // allow "more" link when too many events
-                events: events
+                events: events,
+                eventContent: function(arg) {
+                    let arrayOfDomNodes = []
+                    // title event
+                    let titleEvent = document.createElement('div')
+                    if(arg.event._def.title) {
+                        titleEvent.innerHTML = arg.event._def.title
+                        titleEvent.classList = "fc-event-title fc-sticky"
+                    }
+
+                    // image event
+                    let imgEventWrap = document.createElement('div')
+                    if(arg.event.extendedProps.image_url) {
+                        let imgEvent = '<img src="'+arg.event.extendedProps.image_url+'" >'
+                        imgEventWrap.classList = "fc-event-img"
+                        imgEventWrap.innerHTML = imgEvent;
+                    }
+
+                    arrayOfDomNodes = [ titleEvent,imgEventWrap ]
+
+                    return { domNodes: arrayOfDomNodes }
+                },
+
             });
 
             // Init

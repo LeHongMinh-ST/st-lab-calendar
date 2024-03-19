@@ -5,6 +5,7 @@
 <link href="{{ asset('assets/css/noty/noty.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
+@vite('resources/css/app.scss')
 @vite('resources/css/auth.scss')
 <!-- Scripts -->
 {{--<!-- Css custom -->--}}
