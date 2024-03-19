@@ -4,8 +4,8 @@
 <link href="{{ asset('assets/css/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/noty/noty.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
-@livewireStyles
-<!-- /global stylesheets -->
+
+@vite('resources/css/auth.scss')
 <!-- Scripts -->
 {{--<!-- Css custom -->--}}
 @yield('style_custom')

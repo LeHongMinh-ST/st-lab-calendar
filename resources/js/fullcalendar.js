@@ -111,8 +111,13 @@ const FullCalendarBasic = function() {
                 nowIndicator: true,
                 weekNumberCalculation: 'ISO',
                 editable: true,
+                // timelineDay: {
+                //     slotLabelFormat: ['H:mm'],
+                // },
+                // slotMinTime:"21:00:00",
+                // slotMaxTime:"06:00:00",
                 selectable: true,
-                direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
+                // direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
                 dayMaxEvents: true, // allow "more" link when too many events
                 events: events
             });
