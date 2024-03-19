@@ -12,20 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('is_admin');
+            $table->string('title');
+            $table->text('content');
+            $table->integer('team_id');
+            $table->integer('user_id');
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('full_name');
-            $table->string('phone_number');
-            $table->integer('team_id');
-            $table->string('thumbnail');
-            $table->rememberToken();
+            $table->string('date_of_week');
+            $table->string('day');
+            $table->string('start_time');
+            $table->string('end_time');
+            $table->integer('loop');
+            $table->tinyInteger('week_loop');
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('events');
     }
 };
