@@ -123,6 +123,7 @@ const FullCalendarBasic = function() {
                 dayMaxEvents: true, // allow "more" link when too many events
                 events: events,
                 eventContent: function(arg) {
+                    console.log(arg.event._def)
                     let arrayOfDomNodes = []
                     // title event
                     let titleEvent = document.createElement('div')

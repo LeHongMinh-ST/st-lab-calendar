@@ -13,9 +13,9 @@
 <!-- Page content -->
 <div class="page-content">
 
-{{--    <!-- Main sidebar -->--}}
-{{--    @include('includes.sidebar')--}}
-{{--    <!-- /main sidebar -->--}}
+        <!-- Main sidebar -->
+        @include('includes.sidebar')
+        <!-- /main sidebar -->
 
 
     <!-- Main content -->

@@ -17,6 +17,13 @@ Route::get('/', function () {
     return view('home');
 });
 
+
 Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard');
+    })->name('admin.dashboard');
+});
