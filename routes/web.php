@@ -15,12 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 
 Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login');
+
+Route::get('/teams', function () {
+    return view('pages.teams');
+})->name('teams');
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
