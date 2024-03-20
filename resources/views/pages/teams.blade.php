@@ -6,10 +6,22 @@
             </div>
             <div class="card-body">
                 <div class="list">
-                       <x-team-item></x-team-item>
-                       <x-team-item></x-team-item>
-                       <x-team-item></x-team-item>
-                       <x-team-item></x-team-item>
+                    <x-team-item
+                        :thumbnail="asset('assets/images/logoST.jpg')"
+                        title="ST-TEAM - NHÓM NGHIÊN CỨU VÀ PHÁT TRIỂN PHẦN MỀM - BỘ MÔN CÔNG NGHỆ PHẦN MỀM"
+                    />
+                    <x-team-item
+                        :thumbnail="asset('assets/images/logoST.jpg')"
+                        title="ST-TEAM - NHÓM NGHIÊN CỨU VÀ PHÁT TRIỂN PHẦN MỀM - BỘ MÔN CÔNG NGHỆ PHẦN MỀM"
+                    />
+                    <x-team-item
+                        :thumbnail="asset('assets/images/logoST.jpg')"
+                        title="ST-TEAM - NHÓM NGHIÊN CỨU VÀ PHÁT TRIỂN PHẦN MỀM - BỘ MÔN CÔNG NGHỆ PHẦN MỀM"
+                    />
+                    <x-team-item
+                        :thumbnail="asset('assets/images/logoST.jpg')"
+                        title="ST-TEAM - NHÓM NGHIÊN CỨU VÀ PHÁT TRIỂN PHẦN MỀM - BỘ MÔN CÔNG NGHỆ PHẦN MỀM"
+                    />
                 </div>
             </div>
         </div>
