@@ -16,6 +16,7 @@ class Team extends Model
         'color',
         'thumbnail',
         'description',
+        'slug',
     ];
 
     public function users(): HasMany
