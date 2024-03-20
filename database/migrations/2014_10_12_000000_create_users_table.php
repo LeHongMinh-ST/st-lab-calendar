@@ -14,17 +14,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('is_admin');
+            $table->tinyInteger('is_admin')->default(0);
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('full_name');
-            $table->string('phone_number');
-            $table->integer('team_id');
-            $table->string('thumbnail');
+            $table->string('full_name')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->unsignedInteger('team_id')->nullable()->index();
+            $table->string('thumbnail')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

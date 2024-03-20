@@ -14,18 +14,18 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->integer('team_id');
-            $table->integer('user_id');
+            $table->string('title')->nullable();
+            $table->text('content')->nullable();
+            $table->unsignedInteger('team_id')->nullable()->index();
+            $table->unsignedInteger('user_id')->nullable()->index();
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('date_of_week');
-            $table->string('day');
-            $table->string('start_time');
-            $table->string('end_time');
-            $table->integer('loop');
-            $table->tinyInteger('week_loop');
+            $table->string('date_of_week')->nullable();
+            $table->string('day')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
+            $table->integer('loop')->nullable();
+            $table->tinyInteger('week_loop')->nullable();
             $table->timestamps();
         });
     }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('color');
-            $table->string('thumbnail');
-            $table->text('description');
+            $table->string('color')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

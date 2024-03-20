@@ -14,16 +14,16 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
+            $table->string('title')->nullable();
+            $table->text('content')->nullable();
             $table->enum('type', array_map(fn($type) => $type->value, Type::cases()));
-            $table->string('date_of_week');
-            $table->string('day');
-            $table->integer('event_id');
-            $table->string('start_time');
-            $table->string('end_time');
-            $table->integer('user_id');
-            $table->string('author');
+            $table->string('date_of_week')->nullable();
+            $table->string('day')->nullable();
+            $table->unsignedInteger('event_id')->nullable()->index();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
+            $table->unsignedInteger('user_id')->nullable()->index();
+            $table->string('author')->nullable();
             $table->timestamps();
         });
     }
