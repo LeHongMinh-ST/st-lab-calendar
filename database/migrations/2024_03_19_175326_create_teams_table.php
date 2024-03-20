@@ -12,20 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('is_admin')->default(0);
+            $table->string('name');
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('full_name')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->unsignedInteger('team_id')->nullable()->index();
+            $table->string('color')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->rememberToken();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('teams');
     }
 };
