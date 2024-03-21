@@ -44,9 +44,12 @@
     .login-form {
         margin: 0 auto;
         @include sp {
-
             width: 100%;
             padding: 20px;
+        }
+
+        #error-username, #error-password, #message {
+            color: red;
         }
     }
 
