@@ -16,7 +16,7 @@
 
                     </div>
                     <div class="col-xl-6 ">
-                        <form action="{{route('auth.login')}}" class="login-form" method="POST">
+                        <form action="{{route('handleLogin')}}" class="login-form" method="POST">
                             @csrf
                             <div class="text-center mb-3">
                                 <div class="d-inline-flex align-items-center justify-content-center mb-4 mt-2">
@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Tài khoản/Email</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="text" class="form-control" placeholder="john@st.com" name="username" />
+                                    <input type="text" class="form-control" placeholder="john@st.com" name="username" value="{{ old('username') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-user-circle text-muted"></i>
                                     </div>
@@ -43,7 +43,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Mật khẩu</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="password" class="form-control" placeholder="•••••••••••" name="password" />
+                                    <input type="password" class="form-control" placeholder="•••••••••••" name="password" value="{{ old('password') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-lock text-muted"></i>
                                     </div>

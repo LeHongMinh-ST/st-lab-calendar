@@ -22,13 +22,12 @@ Route::get('/teams', function () {
     return view('pages.teams');
 })->name('teams');
 
-Route::prefix('auth')->group(function () {
-    Route::get('/login', function () {
-        return view('pages.auth.login');
-    })->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-});
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])->name('handleLogin');
+Route::post('/logout', [AuthController::class, 'logout'])->name('handleLogout');
 
 Route::prefix('admin')->group(function () {
     Route::middleware(['auth'])->group(function () {
