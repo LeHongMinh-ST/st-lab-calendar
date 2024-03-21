@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 class AuthLoginRequest extends FormRequest
 {
@@ -20,7 +21,7 @@ class AuthLoginRequest extends FormRequest
      *
      * @return array<string, ValidationRule|array|string>
      */
-    public function rules(): array
+    #[ArrayShape(['username' => "string", 'password' => "string"])] public function rules(): array
     {
         return [
             'username' => 'required',

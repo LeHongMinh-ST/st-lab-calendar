@@ -1,4 +1,7 @@
 <x-auth-layout>
+    @section('custom_js')
+        @vite(['resources/js/auth/login.js'])
+    @endsection
     <div class="content login-wrapper">
         <div class="card">
             <div class="card-body">
@@ -30,7 +33,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Tài khoản/Email</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="text" class="form-control" placeholder="john@st.com" name="username" value="{{ old('username') }}"/>
+                                    <input type="text" class="form-control" placeholder="Tên tài khoản" name="username" id="username" value="{{ old('username') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-user-circle text-muted"></i>
                                     </div>
@@ -43,7 +46,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Mật khẩu</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="password" class="form-control" placeholder="•••••••••••" name="password" value="{{ old('password') }}"/>
+                                    <input type="password" class="form-control" placeholder="•••••••••••" id="password" name="password" value="{{ old('password') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-lock text-muted"></i>
                                     </div>
@@ -54,7 +57,7 @@
                             </div>
                             <div class="d-flex align-items-center mb-3">
                                 <label class="form-check">
-                                    <input type="checkbox" name="remember" class="form-check-input" checked="">
+                                    <input type="checkbox" name="remember" class="form-check-input" value="1">
                                     <span class="form-check-label">Nhớ mật khẩu</span>
                                 </label>
 
@@ -64,7 +67,7 @@
                                 <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                             </div>
                             @error('message')
-                            <label id="message" class="validation-error-label w-100 text-center" for="basic">{{ $message }}</label>
+                            <label id="message-error" class="validation-error-label w-100 text-center" for="basic">{{ $message }}</label>
                             @enderror
 {{--                            <div class="text-center text-muted content-divider mb-3">--}}
 {{--                                <span class="px-2">Hoặc đăng nhập với</span>--}}
