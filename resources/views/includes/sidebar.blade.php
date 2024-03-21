@@ -90,6 +90,18 @@
                     </a>
                 </li>
                 <li class="nav-item-header pt-0">
+                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Báo cáo - Thống kê</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li class="nav-item">
+                    <a href=""
+                       class="nav-link">
+                        <i class="ph-chart-bar"></i>
+                        <span>Báo cáo - Thống kê</span>
+                    </a>
+                </li>
+
+                <li class="nav-item-header pt-0">
                     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Quản lý hệ thống</div>
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
