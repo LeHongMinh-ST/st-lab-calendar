@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'thumbnail',
         'status',
+        'team_id',
     ];
 
     /**

@@ -8,4 +8,5 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/login.png') }}">
     @include('includes.style')
     @include('includes.script')
+    @yield('custom_js')
 </head>
