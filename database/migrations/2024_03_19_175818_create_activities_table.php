@@ -17,13 +17,10 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->enum('type', array_map(fn($type) => $type->value, Type::cases()));
-            $table->string('date_of_week')->nullable();
-            $table->string('day')->nullable();
-            $table->unsignedInteger('event_id')->nullable()->index();
-            $table->string('start_time')->nullable();
-            $table->string('end_time')->nullable();
             $table->unsignedInteger('user_id')->nullable()->index();
-            $table->string('author')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
+            $table->string('owner')->nullable();
             $table->timestamps();
         });
     }
