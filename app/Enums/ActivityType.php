@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum Type:string
+enum ActivityType:string
 {
-    case Report = 'report';
+    case Report = 'work';
     case Seminar = 'seminar';
     case Other = 'other';
 }

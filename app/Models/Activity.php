@@ -14,22 +14,19 @@ class Activity extends Model
         'title',
         'content',
         'type',
-        'date_of_week',
-        'day',
-        'event_id',
         'start_time',
         'end_time',
         'user_id',
-        'author',
+        'owner',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function event(): BelongsTo
-    {
-        return $this->belongsTo(Event::class);
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('full_name')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('gender')->nullable();
+            $table->unsignedInteger('team_id')->nullable()->index();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('content')->nullable();
-            $table->enum('type', array_map(fn($type) => $type->value, Type::cases()));
+            $table->string('type')->nullable();;
             $table->unsignedInteger('user_id')->nullable()->index();
             $table->dateTime('start_time')->nullable();
             $table->dateTime('end_time')->nullable();
