@@ -26,7 +26,11 @@ class User extends Authenticatable
         'password',
         'thumbnail',
         'status',
-        'team_id',
+        'is_admin',
+        'full_name',
+        'thumbnail',
+        'created_by',
+        'updated_by',
     ];
 
     /**
@@ -47,6 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'boolean',
     ];
 
     public function team(): BelongsTo

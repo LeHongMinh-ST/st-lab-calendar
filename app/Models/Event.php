@@ -16,13 +16,11 @@ class Event extends Model
         'content',
         'team_id',
         'user_id',
+        'activity_id',
         'status',
-        'date_of_week',
         'day',
         'start_time',
         'end_time',
-        'loop',
-        'week_loop',
     ];
 
     public function user(): BelongsTo
@@ -35,8 +33,8 @@ class Event extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function activities(): HasMany
+    public function activity(): BelongsTo
     {
-        return $this->hasMany(Activity::class);
+        return $this->belongsTo(Activity::class);
     }
 }

@@ -23,9 +23,10 @@ return new class extends Migration
                 ->default(Status::Active->value);
             $table->string('full_name')->nullable();
             $table->string('phone_number')->nullable();
-            $table->unsignedInteger('team_id')->nullable()->index();
             $table->string('thumbnail')->nullable();
             $table->rememberToken();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

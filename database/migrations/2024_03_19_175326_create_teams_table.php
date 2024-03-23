@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('thumbnail')->nullable();
             $table->text('description')->nullable();
+            $table->unsignedInteger('user_id')->index()->nullable();
             $table->timestamps();
         });
     }

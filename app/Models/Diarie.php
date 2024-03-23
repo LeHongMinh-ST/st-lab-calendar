@@ -7,17 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Team extends Model
+class Diarie extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'status',
-        'color',
-        'thumbnail',
-        'description',
-        'slug',
+        'start_time',
+        'end_time',
+        'report_status',
+        'report',
+        'room_status',
+        'event_id',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'ent_time' => 'datetime',
     ];
 
     public function user(): BelongsTo
@@ -25,8 +31,8 @@ class Team extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function events(): HasMany
+    public function event(): BelongsTo
     {
-        return $this->hasMany(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 }

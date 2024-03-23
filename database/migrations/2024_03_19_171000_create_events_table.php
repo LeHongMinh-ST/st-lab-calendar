@@ -20,12 +20,10 @@ return new class extends Migration
             $table->unsignedInteger('user_id')->nullable()->index();
             $table->enum('status', array_map(fn ($status) => $status->value, Status::cases()))
                 ->default(Status::Active->value);
-            $table->string('date_of_week')->nullable();
             $table->string('day')->nullable();
-            $table->string('start_time')->nullable();
-            $table->string('end_time')->nullable();
-            $table->integer('loop')->nullable();
-            $table->tinyInteger('week_loop')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
+            $table->unsignedInteger('activity_id')->nullable()->index();
             $table->timestamps();
         });
     }
