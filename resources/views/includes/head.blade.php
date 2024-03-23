@@ -7,6 +7,7 @@
     <title>{{ config('app.name', 'Hệ thống quản lý lịch phòng lab') }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/login.png') }}">
     @include('includes.style')
+    {{ $custom_css ?? '' }}
     @include('includes.script')
-    @yield('custom_js')
+    {{ $custom_js ?? '' }}
 </head>

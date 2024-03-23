@@ -1,7 +1,7 @@
 <x-auth-layout>
-    @section('custom_js')
+    <x-slot name="custom_js">
         @vite(['resources/js/auth/login.js'])
-    @endsection
+    </x-slot>
     <div class="content login-wrapper">
         <div class="card">
             <div class="card-body">
