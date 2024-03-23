@@ -178,4 +178,3 @@ const FullCalendarBasic = function() {
 document.addEventListener('DOMContentLoaded', function() {
     FullCalendarBasic.init();
 });
-1

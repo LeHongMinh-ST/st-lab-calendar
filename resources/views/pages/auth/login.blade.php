@@ -38,7 +38,7 @@
                                         <i class="ph-user-circle text-muted"></i>
                                     </div>
                                     @error('username')
-                                    <label id="error-username" class="validation-error-label" for="basic">{{ $message }}</label>
+                                    <label id="error-username" class="validation-error-label" for="username">{{ $message }}</label>
                                     @enderror
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                         <i class="ph-lock text-muted"></i>
                                     </div>
                                     @error('password')
-                                    <label id="error-password" class="validation-error-label" for="basic">{{ $message }}</label>
+                                    <label id="error-password" class="validation-error-label" for="password">{{ $message }}</label>
                                     @enderror
                                 </div>
                             </div>
