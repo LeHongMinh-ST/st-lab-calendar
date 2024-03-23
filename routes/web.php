@@ -40,4 +40,3 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::get('/edit/{id}',[UsersController::class, 'edit'])->name('backend.users.edit');
