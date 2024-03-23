@@ -17,12 +17,11 @@ class Team extends Model
         'color',
         'thumbnail',
         'description',
-        'slug',
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function events(): HasMany

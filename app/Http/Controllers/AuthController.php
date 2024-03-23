@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\Status;
 use App\Http\Requests\Auth\AuthLoginRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
@@ -11,6 +14,11 @@ class AuthController extends Controller
     public function __construct(
     )
     {
+    }
+
+    public function showLoginForm():View|Application|Factory
+    {
+        return view('pages.auth.login');
     }
 
     public function login(AuthLoginRequest $request): RedirectResponse

@@ -42,8 +42,8 @@
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
                 <li class="nav-item">
-                    <a href=""
-                       class="nav-link">
+                    <a href="{{route('admin.calendar.create')}}"
+                       class="nav-link {{ request()->routeIs('admin.calendar.create') ? 'active' : '' }}">
                         <i class="ph-calendar-plus"></i>
                         <span>Đăng ký lịch</span>
                     </a>

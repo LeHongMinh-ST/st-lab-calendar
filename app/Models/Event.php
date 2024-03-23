@@ -37,4 +37,9 @@ class Event extends Model
     {
         return $this->belongsTo(Activity::class);
     }
+
+    public function calendar(): BelongsTo
+    {
+        return $this->belongsTo(Calendar::class);
+    }
 }

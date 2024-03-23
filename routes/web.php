@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,25 +19,26 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/teams', function () {
-    return view('pages.teams');
-})->name('teams');
+//Route::get('/teams', function () {
+//    return view('pages.teams');
+//})->name('teams');
 
-Route::get('/login', function () {
-    return view('pages.auth.login');
-})->name('login');
+Route::get('/login',[AuthController::class, 'showLoginForm'])->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('handleLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('handleLogout');
 
-Route::prefix('admin')->group(function () {
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/', function () {
-            return redirect()->route('admin.dashboard');
-        });
-        Route::get('/dashboard', function () {
-            return view('pages.dashboard');
-        })->name('admin.dashboard');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    });
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard');
+    })->name('admin.dashboard');
+
+    Route::prefix('calendar')->group(function () {
+        Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
+        Route::get('/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
     });
 });
 

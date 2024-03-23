@@ -16,7 +16,16 @@
 
 
         <ul class="nav flex-row justify-content-end order-1 order-lg-2">
+            <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
+                <a href="{{ route('home') }}" class="navbar-nav-link align-items-center rounded-pill p-1">
+                    <div class="status-indicator-container">
+                        <i class="ph-users-three "></i>
+                    </div>
+                    <span class="d-none d-lg-inline-block mx-lg-2">Teams</span>
+                </a>
 
+
+            </li>
 
             @if(auth()->check())
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
