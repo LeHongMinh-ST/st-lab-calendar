@@ -39,3 +39,5 @@ Route::prefix('admin')->group(function () {
         })->name('admin.dashboard');
     });
 });
+
+Route::get('/edit/{id}',[UsersController::class, 'edit'])->name('backend.users.edit');
