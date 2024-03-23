@@ -41,4 +41,9 @@ class Calendar extends Model
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
 }

@@ -54,9 +54,9 @@ class User extends Authenticatable
         'is_admin' => 'boolean',
     ];
 
-    public function team(): BelongsTo
+    public function team(): HasMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->hasMany(Team::class);
     }
 
     public function events(): HasMany
