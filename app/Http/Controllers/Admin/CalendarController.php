@@ -10,13 +10,13 @@ use \Illuminate\Contracts\View\Factory;
 
 class CalendarController extends Controller
 {
-    public function index():View|Application|Factory
+    public function index(): View|Application|Factory
     {
         return view('admin.calendar.index');
     }
 
 
-    public function create():View|Application|Factory
+    public function create(): View|Application|Factory
     {
         return view('pages.calendar.create');
     }
