@@ -10,4 +10,4 @@ window.Alpine = Alpine
 
 
 import './fullcalendar.js'
-import './datepicker.js'
+// import './datepicker.js'
