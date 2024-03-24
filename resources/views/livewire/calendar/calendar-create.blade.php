@@ -11,7 +11,7 @@
                         <label for="title" class="col-form-label">
                             Tiêu đề <span class="required">*</span>
                         </label>
-                        <input wire:model.blur="title" type="text" id="title" class="form-control">
+                        <input wire:model.live="title" type="text" id="title" class="form-control">
                         @error('title')
                         <label id="error-username" class="validation-error-label text-danger"
                                for="username">{{ $message }}</label>
@@ -47,6 +47,10 @@
                             <input wire:model.live="endDate" type="text" id="endDate"
                                    class="form-control datepicker-basic datepicker-input">
                         </div>
+                        @error('endDate')
+                        <label id="error-username" class="validation-error-label text-danger"
+                               for="username">{{ $message }}</label>
+                        @enderror
                     </div>
                 </div>
                 <div class="row">
@@ -54,13 +58,32 @@
                         <label for="title" class="col-form-label">
                             Thời gian <span class="required">*</span>
                         </label>
-                        <input type="text" id="title" class="form-control">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <input type="time" class="form-control" wire:model.live="startTime">
+                            </div>
+                            <div class="col-md-1 col-12 d-none d-md-flex align-items-center justify-content-center">
+                                <div class="tilde d-flex align-items-center justify-content-center">~</div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <input type="time" class="form-control" wire:model.live="endTime">
+                            </div>
+                            @if($this->totalTime)
+                                <div class="col-md-4 col-12 d-flex align-items-center">
+                                    ({{$this->totalTime}})
+                                </div>
+                            @endif
+
+                        </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="title" class="col-form-label">
-                            Lặp lại <span class="required">*</span>
+                            Lặp lại
                         </label>
-                        <input type="text" id="title" class="form-control">
+                        <select type="text" id="title" class="form-select">
+                            <option value="">Không lặp lại</option>
+                            <option value="">Lặp lại hàng tuần</option>
+                        </select>
                     </div>
                 </div>
 
@@ -112,18 +135,44 @@
 <script>
     $(document).ready(function () {
         const dpBasicElementStartDate = document.querySelector('#startDate');
-        dpBasicElementStartDate.addEventListener('changeDate', function(event) {
-            const selectedDate = new Date(event.detail.date);
-            const formattedDate = formatDateToString(selectedDate);
-            Livewire.dispatch('update-start-date', { value: formattedDate})
-        });
+        if(dpBasicElementStartDate) {
+            const dpClearStart = new Datepicker(dpBasicElementStartDate, {
+                container: '.content-inner',
+                buttonClass: 'btn',
+                prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+                nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+                clearBtn: true,
+                format: 'dd/mm/yyyy',
+                weekStart: 1,
+                language: 'vi',
+            });
+            dpBasicElementStartDate.addEventListener('changeDate', function(event) {
+                const selectedDate = new Date(event.detail.date);
+                const formattedDate = formatDateToString(selectedDate);
+                Livewire.dispatch('update-start-date', { value: formattedDate})
+            });
+        }
+
 
         const dpBasicElementEndDate = document.querySelector('#endDate');
-        dpBasicElementEndDate.addEventListener('changeDate', function(event) {
-            const selectedDate = new Date(event.detail.date);
-            const formattedDate = formatDateToString(selectedDate);
-            Livewire.dispatch('update-end-date', { value: formattedDate})
-        });
+        if(dpBasicElementStartDate) {
+            const dpClearEnd = new Datepicker(dpBasicElementEndDate, {
+                container: '.content-inner',
+                buttonClass: 'btn',
+                prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+                nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+                clearBtn: true,
+                format: 'dd/mm/yyyy',
+                weekStart: 1,
+                language: 'vi',
+            });
+            dpBasicElementEndDate.addEventListener('changeDate', function(event) {
+                const selectedDate = new Date(event.detail.date);
+                const formattedDate = formatDateToString(selectedDate);
+                Livewire.dispatch('update-end-date', { value: formattedDate})
+            });
+        }
+
     });
 </script>
 @endscript

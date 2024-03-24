@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Calendar;
 
+use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -19,6 +21,12 @@ class CalendarCreate extends Component
 
     #[Validate('required', as: 'ngày kết thúc')]
     public string $endDate = '';
+
+    #[Validate('required', as: 'thời gian bắt đầu')]
+    public string $startTime = '';
+
+    #[Validate('required', as: 'thời gian kết thúc')]
+    public string $endTime = '';
 
     protected $listeners = [
         'update-start-date' => 'updateStartDate',
@@ -43,11 +51,31 @@ class CalendarCreate extends Component
 
     public function updateStartDate($value): void
     {
+        if ($value) {
+            $this->resetValidation('startDate');
+        }
         $this->startDate = $value;
     }
 
     public function updateEndDate($value): void
     {
+        if ($value) {
+            $this->resetValidation('endDate');
+        }
         $this->endDate = $value;
     }
+
+    #[Computed]
+    public function totalTime(): string
+    {
+        if ($this->startTime && $this->endTime) {
+            $start = new DateTime($this->startTime);
+            $end = new DateTime($this->endTime);
+            return $start->diff($end)->format('%h giờ %i phút');
+        }
+        return '';
+    }
+
+
+
 }
