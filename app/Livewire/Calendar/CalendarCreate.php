@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -76,6 +77,16 @@ class CalendarCreate extends Component
         return '';
     }
 
-
+    #[Computed]
+    public function maxTime(): string
+    {
+        if ($this->startDate && $this->endDate) {
+           if ($this->startDate == $this->endDate) {
+               $startTime = Carbon::parse($this->startTime);
+               return $startTime->copy()->subMinutes(30)->format('H:i');
+           }
+        }
+        return '';
+    }
 
 }
