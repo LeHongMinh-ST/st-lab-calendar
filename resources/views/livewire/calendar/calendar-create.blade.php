@@ -66,7 +66,7 @@
                                 <div class="tilde d-flex align-items-center justify-content-center">~</div>
                             </div>
                             <div class="col-md-3 col-12">
-                                <input type="time" class="form-control" wire:model.live="endTime">
+                                <input type="time" class="form-control" wire:model.live="endTime" max="{{$this->maxTime}}">
                             </div>
                             @if($this->totalTime)
                                 <div class="col-md-4 col-12 d-flex align-items-center">
@@ -82,8 +82,17 @@
                         </label>
                         <select type="text" id="title" class="form-select">
                             <option value="">Không lặp lại</option>
+                            <option value="">Lặp lại hàng ngày</option>
                             <option value="">Lặp lại hàng tuần</option>
                         </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="title" class="col-form-label">
+                            Chọn ngày trong tuần lặp lại
+                        </label>
+                        <textarea wire:model.live="description" id="title" class="form-control"></textarea>
                     </div>
                 </div>
 
