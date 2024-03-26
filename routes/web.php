@@ -32,6 +32,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
+    Route::get('/edit', function () {
+        return view('pages.edit');
+    });
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
     })->name('admin.dashboard');
