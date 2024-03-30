@@ -29,7 +29,6 @@ const FullCalendarBasic = function () {
         };
 
         const loadEvents = async (calendar) => {
-            console.log(calendar)
             let startDayWeek = calendar.view.activeStart;
             let endDayWeek = calendar.view.activeEnd;
 
