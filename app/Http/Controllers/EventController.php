@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Constants;
 use App\Enums\Status;
 use App\Http\Resources\Event\EventCollection;
 use App\Models\Event;
@@ -13,8 +14,8 @@ class EventController extends Controller
     public function index(Request $request): EventCollection
     {
         $now = Carbon::now();
-        $startDay = $request->input('start', $now->startOfWeek()->format('Y-m-d'));
-        $endDay = $request->input('end', $now->endOfWeek()->format('Y-m-d'));
+        $startDay = $request->input('start', $now->startOfWeek()->format(Constants::FORMAT_DATE));
+        $endDay = $request->input('end', $now->endOfWeek()->format(Constants::FORMAT_DATE));
 
         $startCarbon = Carbon::parse($startDay)->timestamp;
         $endCarbon = Carbon::parse($endDay)->timestamp;
