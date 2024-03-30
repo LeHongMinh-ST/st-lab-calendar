@@ -18,11 +18,9 @@ class CalendarService
             case CalendarLoop::None:
                 $this->createEvent($calendar);
                 break;
-            case CalendarLoop::Daily:
-                $this->createRecurringEvent($calendar, 'addDay');
-                break;
+            case CalendarLoop::Daily :
             case CalendarLoop::Weekly:
-                $this->createRecurringEvent($calendar, 'addWeek');
+                $this->createRecurringEvent($calendar);
                 break;
         }
     }
@@ -32,7 +30,7 @@ class CalendarService
         $this->createActivityAndEvent($calendar, $calendar->start_day);
     }
 
-    private function createRecurringEvent(Calendar $calendar, $incrementMethod): void
+    private function createRecurringEvent(Calendar $calendar): void
     {
         $startDate = Carbon::parse($calendar->start_day);
         $endDate = Carbon::parse($calendar->end_day);
@@ -41,7 +39,7 @@ class CalendarService
                 $this->createActivityAndEvent($calendar, $startDate);
             }
 
-            $startDate->$incrementMethod();
+            $startDate->addDay();
         }
     }
 
