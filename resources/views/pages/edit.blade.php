@@ -33,7 +33,7 @@
 
 
     <div class="content">
-        <ul class="nav nav-tabs mb-3">
+        <ul class="nav nav-tabs mb-3"  style="margin: 0px !important;">
             <li class="nav-item" role="presentation">
                 <a href="#js-tab1" class="nav-link active" data-bs-toggle="tab">
                     <i class="ph-user"></i>
