@@ -1,4 +1,9 @@
-<div class="row">
+@php
+    use App\Enums\CalendarLoop;
+    use App\Enums\ActivityType;
+    use App\Enums\DayOfWeek;
+@endphp
+<div class="row calendar-create">
     <div class="col-md-9 col-12">
         <div class="card">
             <div class="card-header bold">
@@ -54,47 +59,75 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <label for="title" class="col-form-label">
                             Thời gian <span class="required">*</span>
                         </label>
                         <div class="row">
-                            <div class="col-md-3 col-12">
+                            <div class="col-md-4 col-5">
                                 <input type="time" class="form-control" wire:model.live="startTime">
                             </div>
-                            <div class="col-md-1 col-12 d-none d-md-flex align-items-center justify-content-center">
+                            <div class="col-md-1 col-2 d-flex align-items-center justify-content-center">
                                 <div class="tilde d-flex align-items-center justify-content-center">~</div>
                             </div>
-                            <div class="col-md-3 col-12">
-                                <input type="time" class="form-control" wire:model.live="endTime" max="{{$this->maxTime}}">
+                            <div class="col-md-4 col-5">
+                                <input type="time" class="form-control" wire:model.live="endTime"
+                                       max="{{$this->maxTime}}">
                             </div>
                             @if($this->totalTime)
-                                <div class="col-md-4 col-12 d-flex align-items-center">
+                                <div class="col-md-3 col-12 d-flex align-items-center mt-2 mt-md-0">
                                     ({{$this->totalTime}})
                                 </div>
                             @endif
 
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label for="title" class="col-form-label">
-                            Lặp lại
-                        </label>
-                        <select type="text" id="title" class="form-select">
-                            <option value="">Không lặp lại</option>
-                            <option value="">Lặp lại hàng ngày</option>
-                            <option value="">Lặp lại hàng tuần</option>
-                        </select>
+                    <div class="col-12 col-md-12">
+                       <div class="row">
+                           <div class="col-md-6 col-12">
+                               <label for="title" class="col-form-label">
+                                   Lặp lại
+                               </label>
+                               <select type="text" id="title" class="form-select" wire:model.live="loop">
+                                   @foreach(CalendarLoop::cases() as $calendarLoop)
+                                       <option value="{{$calendarLoop->value}}">{{ $calendarLoop->description() }}</option>
+                                   @endforeach
+                               </select>
+                           </div>
+                           @if($this->showOptionLoop)
+                           <div class="col-md-6 col-12 d-md-flex align-items-center"  wire:transition>
+                               <div class="text mt-4">
+                                   Tổng số tuần: {{$this->totalWeeks}}
+                               </div>
+                           </div>
+                           @endif
+
+                       </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <label for="title" class="col-form-label">
-                            Chọn ngày trong tuần lặp lại
-                        </label>
-                        <textarea wire:model.live="description" id="title" class="form-control"></textarea>
+                @if($this->showOptionLoop)
+                    <div class="row" wire:transition>
+                        <div class="col-12">
+                            <label for="title" class="col-form-label">
+                                Chọn ngày lặp lại trong tuần <span class="required">*</span>
+                            </label>
+                            <div class="list-day-of-week">
+                                @foreach(DayOfWeek::cases() as $dayOfWeek)
+                                    <div class="item-day-of-week @if(!$this->isSelectDayOfWeek($dayOfWeek->value)) disabled @endif @if($this->isActiveDayOfWeek($dayOfWeek->value)) active @endif "
+                                         wire:click="handleUpdateDayOfWeek({{$dayOfWeek->value}})">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                {{$dayOfWeek->description()}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                @endif
+
 
             </div>
         </div>
@@ -111,7 +144,11 @@
                             <label for="title" class="col-form-label">
                                 Nhóm<span class="required">*</span>
                             </label>
-                            <input type="text" id="title" class="form-control">
+                            <select type="text" id="title" class="form-select" wire:model.live="teamId">
+                                @foreach($userTeams as $userTeam)
+                                    <option value="{{$userTeam->id}}">{{ $userTeam->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -119,7 +156,11 @@
                             <label for="title" class="col-form-label">
                                 Hoạt động<span class="required">*</span>
                             </label>
-                            <input type="text" id="title" class="form-control">
+                            <select type="text" id="title" class="form-select" wire:model.live="activityType">
+                                @foreach(ActivityType::cases() as $activityType)
+                                    <option value="{{$activityType->value}}">{{ $activityType->description() }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -133,7 +174,9 @@
                 Hành động
             </div>
             <div class="card-body d-flex align-items-center gap-1">
-                <button class="btn btn-primary" @click="$wire.submit"><i class="ph-floppy-disk"></i> Lưu</button>
+                <button class="btn btn-primary" @click="$wire.submit">
+                    <i class="ph-floppy-disk"></i> Lưu
+                </button>
                 <button class="btn btn-warning"><i class="ph-arrow-counter-clockwise"></i> Trở lại</button>
             </div>
         </div>
@@ -144,41 +187,39 @@
 <script>
     $(document).ready(function () {
         const dpBasicElementStartDate = document.querySelector('#startDate');
-        if(dpBasicElementStartDate) {
-            const dpClearStart = new Datepicker(dpBasicElementStartDate, {
+        if (dpBasicElementStartDate) {
+            new Datepicker(dpBasicElementStartDate, {
                 container: '.content-inner',
                 buttonClass: 'btn',
                 prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
                 nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
-                clearBtn: true,
                 format: 'dd/mm/yyyy',
                 weekStart: 1,
                 language: 'vi',
             });
-            dpBasicElementStartDate.addEventListener('changeDate', function(event) {
+            dpBasicElementStartDate.addEventListener('changeDate', function (event) {
                 const selectedDate = new Date(event.detail.date);
                 const formattedDate = formatDateToString(selectedDate);
-                Livewire.dispatch('update-start-date', { value: formattedDate})
+                Livewire.dispatch('update-start-date', { value: formattedDate })
             });
         }
 
 
         const dpBasicElementEndDate = document.querySelector('#endDate');
-        if(dpBasicElementStartDate) {
-            const dpClearEnd = new Datepicker(dpBasicElementEndDate, {
+        if (dpBasicElementStartDate) {
+            new Datepicker(dpBasicElementEndDate, {
                 container: '.content-inner',
                 buttonClass: 'btn',
                 prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
                 nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
-                clearBtn: true,
                 format: 'dd/mm/yyyy',
                 weekStart: 1,
                 language: 'vi',
             });
-            dpBasicElementEndDate.addEventListener('changeDate', function(event) {
+            dpBasicElementEndDate.addEventListener('changeDate', function (event) {
                 const selectedDate = new Date(event.detail.date);
                 const formattedDate = formatDateToString(selectedDate);
-                Livewire.dispatch('update-end-date', { value: formattedDate})
+                Livewire.dispatch('update-end-date', { value: formattedDate })
             });
         }
 

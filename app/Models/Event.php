@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\DateTimeStamp;
+use App\Enums\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +25,11 @@ class Event extends Model
         'end_time',
     ];
 
+    protected $casts = [
+        'start_day' => DateTimeStamp::class,
+        'end_day' => DateTimeStamp::class,
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -41,5 +48,15 @@ class Event extends Model
     public function calendar(): BelongsTo
     {
         return $this->belongsTo(Calendar::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+            $query->status = Status::Active;
+        });
     }
 }

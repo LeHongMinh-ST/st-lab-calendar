@@ -2,11 +2,22 @@
 
 namespace App\Livewire\Calendar;
 
+use App\Common\Constants;
+use App\Enums\ActivityType;
+use App\Enums\CalendarLoop;
+use App\Enums\Status;
+use App\Models\Calendar;
+use App\Models\Team;
+use App\Services\CalendarService;
 use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -29,15 +40,83 @@ class CalendarCreate extends Component
     #[Validate('required', as: 'thời gian kết thúc')]
     public string $endTime = '';
 
+    public CalendarLoop $loop = CalendarLoop::None;
+
+    public array $dayOfWeek = [];
+
+    public ActivityType $activityType = ActivityType::Report;
+
+    public Collection|array $userTeams = [];
+
+    public array $dayOfWeekFromStartDateToEndDate = [];
+
+    public int $teamId = 0;
+
     protected $listeners = [
         'update-start-date' => 'updateStartDate',
         'update-end-date' => 'updateEndDate',
     ];
 
+    public bool $isLoading = false;
 
-    public function submit(): void
+
+    public function mount(): void
+    {
+        $this->startDate = Carbon::now()->format(Constants::FORMAT_DATE);
+        $this->endDate = Carbon::now()->format(Constants::FORMAT_DATE);
+        $this->startTime = Carbon::now()->format(Constants::FORMAT_TIME);
+        $this->endTime = Carbon::now()->addHour()->format(Constants::FORMAT_TIME);
+        $this->userTeams = Team::where('user_id', auth()->id())->get();
+        $this->teamId = $this->userTeams->first()?->id ?? 0;
+    }
+
+
+    public function submit(): RedirectResponse|null
     {
         $this->validate();
+
+        if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
+        }
+
+        if (!$this->isLoading) {
+            $this->isLoading = true;
+
+            DB::beginTransaction();
+            try {
+
+                $calendar = new Calendar();
+
+                $calendar->title = $this->title;
+
+                $calendar->start_time = $this->startTime;
+                $calendar->end_time = $this->endTime;
+
+                $calendar->start_day = $this->startDate;
+                $calendar->end_day = $this->endDate;
+                $calendar->loop = $this->loop;
+                $calendar->date_of_week = $this->dayOfWeek;
+                $calendar->team_id = $this->teamId;
+
+                $calendar->save();
+
+                app(CalendarService::class)->createCalendarEvent($calendar);
+                // Your code here
+                DB::commit();
+                $this->dispatch('alert', type: 'success', message: 'Tạo lịch thành công!');
+//                return redirect()->route('calendar.index');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Create Calendar', [
+                    'method' => __METHOD__,
+                    'message' => $e->getMessage()
+                ]);
+                $this->dispatch('alert', type: 'error', message: 'Có lỗi xảy ra, vui lòng thử lại sau!');
+            }
+            $this->isLoading = false;
+        }
+        return null;
+
     }
 
     public function updated($field): void
@@ -50,12 +129,23 @@ class CalendarCreate extends Component
         return view('livewire.calendar.calendar-create');
     }
 
+    public function updatingActivityType(&$value): void
+    {
+        if (is_string($value)) {
+            $value = ActivityType::fromValue($value);
+        }
+    }
+
     public function updateStartDate($value): void
     {
         if ($value) {
             $this->resetValidation('startDate');
         }
-        $this->startDate = $value;
+        $this->startDate = str_replace('/', '-', $value);
+
+        if ($this->loop == CalendarLoop::Weekly) {
+            $this->setDayOfWeekFromStartDateToEndDate();
+        }
     }
 
     public function updateEndDate($value): void
@@ -63,8 +153,65 @@ class CalendarCreate extends Component
         if ($value) {
             $this->resetValidation('endDate');
         }
-        $this->endDate = $value;
+        $this->endDate = str_replace('/', '-', $value);
+
+        if ($this->loop == CalendarLoop::Weekly) {
+            $this->setDayOfWeekFromStartDateToEndDate();
+        }
     }
+
+    public function updatingLoop(&$value): void
+    {
+        if (is_string($value)) {
+            $value = CalendarLoop::fromValue($value);
+        }
+
+        if ($value == CalendarLoop::None) {
+            $this->dayOfWeek = [];
+        }
+
+        if ($value == CalendarLoop::Weekly) {
+            $this->setDayOfWeekFromStartDateToEndDate();
+        }
+    }
+
+    public function handleUpdateDayOfWeek($value): void
+    {
+        if (!$this->isSelectDayOfWeek($value)) {
+            return;
+        }
+
+        if (in_array($value, $this->dayOfWeek)) {
+            $this->dayOfWeek = array_diff($this->dayOfWeek, [$value]);
+        } else {
+            $this->dayOfWeek[] = $value;
+        }
+    }
+
+    public function setDayOfWeekFromStartDateToEndDate(): void
+    {
+        $startDate = Carbon::parse($this->startDate);
+        $endDate = Carbon::parse($this->endDate);
+        $dayOfWeek = [];
+        while ($startDate->lte($endDate)) {
+            $dayOfWeek[] = $startDate->dayOfWeek;
+            $startDate->addDay();
+        }
+        $this->dayOfWeekFromStartDateToEndDate = $dayOfWeek;
+    }
+
+    #[Computed]
+    public function isActiveDayOfWeek($value): bool
+    {
+        return in_array($value, $this->dayOfWeek);
+    }
+
+    #[Computed]
+    public function isSelectDayOfWeek($value): bool
+    {
+        return in_array($value, $this->dayOfWeekFromStartDateToEndDate);
+    }
+
 
     #[Computed]
     public function totalTime(): string
@@ -81,12 +228,33 @@ class CalendarCreate extends Component
     public function maxTime(): string
     {
         if ($this->startDate && $this->endDate) {
-           if ($this->startDate == $this->endDate) {
-               $startTime = Carbon::parse($this->startTime);
-               return $startTime->copy()->subMinutes(30)->format('H:i');
-           }
+            if ($this->startDate == $this->endDate) {
+                $startTime = Carbon::parse($this->startTime);
+                return $startTime->copy()->subMinutes(30)->format(Constants::FORMAT_TIME);
+            }
         }
         return '';
+    }
+
+    #[Computed]
+    public function showOptionLoop(): bool
+    {
+        return $this->loop == CalendarLoop::Weekly;
+    }
+
+    #[Computed]
+    public function showEndDate()
+    {
+        return $this->loop !== CalendarLoop::None;
+    }
+
+    //Tôi muốn tính số tuần dựa theo ngày bắt đầu và ngày kết thúc
+    #[Computed]
+    public function totalWeeks(): int
+    {
+        $startDate = Carbon::parse($this->startDate);
+        $endDate = Carbon::parse($this->endDate);
+        return $startDate->diffInWeeks($endDate) + 1;
     }
 
 }

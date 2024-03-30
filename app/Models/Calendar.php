@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Casts\DateTimeStamp;
+use App\Enums\CalendarLoop;
+use App\Enums\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +19,7 @@ class Calendar extends Model
         'status',
         'date_of_week',
         'start_time',
-        'ent_time',
+        'end_time',
         'start_day',
         'end_day',
         'week_loop',
@@ -26,10 +29,11 @@ class Calendar extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'datetime',
-        'ent_time' => 'datetime',
-        'start_day' => 'datetime',
-        'end_day' => 'datetime',
+        'date_of_week' => 'array',
+        'loop' => CalendarLoop::class,
+        'status' => Status::class,
+        'start_day' => DateTimeStamp::class,
+        'end_day' => DateTimeStamp::class,
     ];
 
     public function user(): BelongsTo
@@ -45,5 +49,15 @@ class Calendar extends Model
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+            $query->status = Status::Active;
+        });
     }
 }

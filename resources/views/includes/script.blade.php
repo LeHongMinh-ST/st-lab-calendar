@@ -11,6 +11,7 @@
 <script src="{{ asset('assets/js/vendor/ui/moment/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/pickers/daterangepicker.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/pickers/datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/ui/fullcalendar/main.min.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
