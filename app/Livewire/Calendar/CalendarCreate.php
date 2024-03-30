@@ -81,6 +81,19 @@ class CalendarCreate extends Component
 
         if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
+            return null;
+        }
+
+        if ($this->activityType == ActivityType::Seminar && !$this->seminarUser) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập tên người trình bày!');
+            return null;
+
+        }
+
+        if ($this->activityType == ActivityType::Seminar && !$this->seminarContent) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập nội dung buổi seminar!');
+            return null;
+
         }
 
         if (!$this->isLoading) {
@@ -90,12 +103,9 @@ class CalendarCreate extends Component
             try {
 
                 $calendar = new Calendar();
-
                 $calendar->title = $this->title;
-
                 $calendar->start_time = $this->startTime;
                 $calendar->end_time = $this->endTime;
-
                 $calendar->start_day = $this->startDate;
                 $calendar->end_day = $this->endDate;
                 $calendar->loop = $this->loop;
