@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Common\Constants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,10 @@ class Team extends Model
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function getThumbnailAttribute($value): string
+    {
+        return $value ? asset('storage/' . $value) : asset(Constants::TEAM_IMAGE_DEFAULT);
     }
 }

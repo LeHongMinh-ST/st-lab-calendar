@@ -4,12 +4,24 @@
 @import "teams";
 @import "calendar";
 
-
-.fc-event-img {
-   img {
-       width: 48px;
-   }
+.fc-event-main {
+    .fc-event-title {
+        font-size: 14px;
+    }
+    .fc-event-img {
+        margin-top: 5px;
+        img {
+            width: 36px;
+            border-radius: 50%;
+        }
+    }
+    .fc-event-team {
+        margin-left: 5px;
+        font-size: 14px;
+    }
 }
+
+
 
 
 .required {

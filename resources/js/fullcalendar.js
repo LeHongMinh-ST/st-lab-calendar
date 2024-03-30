@@ -1,180 +1,119 @@
-/* ------------------------------------------------------------------------------
- *
- *  # Fullcalendar basic options
- *
- *  Demo JS code for extra_fullcalendar_views.html and extra_fullcalendar_styling.html pages
- *
- * ---------------------------------------------------------------------------- */
+function padNumber(number) {
+    return number < 10 ? '0' + number : number;
+}
+
+function formatDate(date) {
+    const day = padNumber(date.getDate());
+    const month = padNumber(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return day + '-' + month + '-' + year;
+}
 
 
-// Setup module
-// ------------------------------
+const FullCalendarBasic = function () {
 
-const FullCalendarBasic = function() {
-
-
-    //
-    // Setup module components
-    //
-
-    // Basic calendar
-    const _componentFullCalendarBasic = function() {
+    const _componentFullCalendarBasic = async function () {
         if (typeof FullCalendar == 'undefined') {
             console.warn('Warning - Fullcalendar files are not loaded.');
             return;
         }
 
-        // Add demo events
-        // ------------------------------
-
-        // Default events
-        const events = [
-            {
-                title: 'All Day Event',
-                start: '2020-09-01'
-            },
-            {
-                title: 'Long Event',
-                start: '2020-09-07',
-                end: '2020-09-10'
-            },
-            {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-09-09T16:00:00'
-            },
-            {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-09-16T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: '2020-09-11',
-                end: '2020-09-13'
-            },
-            {
-                title: 'Meeting',
-                start: '2020-09-12T10:30:00',
-                end: '2020-09-12T12:30:00',
-                image_url: '/assets/images/logoST.jpg'
-            },
-            {
-                title: 'Lunch',
-                start: '2020-09-12T12:00:00'
-            },
-            {
-                title: 'Meeting',
-                start: '2020-09-12T14:30:00'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2020-09-12T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2020-09-12T20:00:00'
-            },
-            {
-                title: 'Birthday Party',
-                start: '2020-09-13T07:00:00'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2020-09-28'
-            }
-        ];
-
-
-        // Initialization
-        // ------------------------------
-
-        //
-        // Basic view
-        //
-
-        // Define element
-        const calendarBasicViewElement = document.querySelector('.fullcalendar-basic');
-
-        // Initialize
-        if(calendarBasicViewElement) {
-            const calendarBasicViewInit = new FullCalendar.Calendar(calendarBasicViewElement, {
-                locale: 'vi',
-                headerToolbar: {
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'today'
-                },
-                initialView: 'timeGridWeek',
-                initialDate: '2020-09-12',
-                navLinks: true, // can click day/week names to navigate views
-                nowIndicator: true,
-                weekNumberCalculation: 'ISO',
-                editable: true,
-                timelineDay: {
-                    slotLabelFormat: ['H:mm'],
-                },
-                height: 'auto',
-                slotMinTime: "07:00",
-                slotMaxTime: "20:00",
-                selectable: true,
-                // direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
-                dayMaxEvents: true, // allow "more" link when too many events
-                events: events,
-                eventContent: function(arg) {
-                    console.log(arg.event._def)
-                    let arrayOfDomNodes = []
-                    // title event
-                    let titleEvent = document.createElement('div')
-                    if(arg.event._def.title) {
-                        titleEvent.innerHTML = arg.event._def.title
-                        titleEvent.classList = "fc-event-title fc-sticky"
-                    }
-
-                    // image event
-                    let imgEventWrap = document.createElement('div')
-                    if(arg.event.extendedProps.image_url) {
-                        let imgEvent = '<img src="'+arg.event.extendedProps.image_url+'" >'
-                        imgEventWrap.classList = "fc-event-img"
-                        imgEventWrap.innerHTML = imgEvent;
-                    }
-
-                    arrayOfDomNodes = [ titleEvent,imgEventWrap ]
-
-                    return { domNodes: arrayOfDomNodes }
-                },
-
+        const getEvents = async (params) => {
+            const response = await axios({
+                method: 'get',
+                url: `${window.location.origin}/api/events`,
+                params
             });
 
-            // Init
-            calendarBasicViewInit.render();
+            return response.data.data;
+        };
 
-            // Resize calendar when sidebar toggler is clicked
-            document.querySelectorAll('.sidebar-control').forEach(function(sidebarToggle) {
-                sidebarToggle.addEventListener('click', function() {
-                    calendarBasicViewInit.updateSize();
+        const loadEvents = async (calendar) => {
+            console.log(calendar)
+            let startDayWeek = calendar.view.activeStart;
+            let endDayWeek = calendar.view.activeEnd;
+
+            const firstDay = new Date(startDayWeek);
+            const lastDay = new Date(endDayWeek);
+
+            const events = await getEvents({
+                start: formatDate(firstDay),
+                end: formatDate(lastDay)
+            });
+            calendar.removeAllEvents();
+            calendar.addEventSource(events);
+        };
+
+        const calendarOptions = {
+            locale: 'vi',
+            headerToolbar: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'today'
+            },
+            initialView: 'timeGridWeek',
+            navLinks: true,
+            nowIndicator: true,
+            weekNumberCalculation: 'ISO',
+            editable: true,
+            height: 'auto',
+            slotMinTime: "07:00",
+            slotMaxTime: "20:00",
+            selectable: true,
+            dayMaxEvents: true,
+            eventContent: function (arg) {
+                let arrayOfDomNodes = [];
+
+                let timeEvent = document.createElement('div');
+                if (arg.timeText) {
+                    timeEvent.innerHTML = arg.timeText;
+                    timeEvent.classList = "fc-event-time fc-sticky";
+                }
+
+                let titleEvent = document.createElement('div');
+                if (arg.event._def.title) {
+                    titleEvent.innerHTML = arg.event._def.title;
+                    titleEvent.classList = "fc-event-title fc-sticky";
+                }
+
+                let imgEventWrap = document.createElement('div');
+                if (arg.event.extendedProps?.team?.thumbnail) {
+                    let imgEvent = `<img src="${arg.event.extendedProps?.team?.thumbnail}" > <span class="fc-event-team">${arg.event.extendedProps?.team?.name} </span>`;
+                    imgEventWrap.classList = "fc-event-img";
+                    imgEventWrap.innerHTML = imgEvent;
+                }
+
+                arrayOfDomNodes = [timeEvent, titleEvent, imgEventWrap];
+
+                return { domNodes: arrayOfDomNodes };
+            },
+        };
+
+        const calendarBasicViewElement = document.querySelector('.fullcalendar-basic');
+
+        if (calendarBasicViewElement) {
+            const calendar = new FullCalendar.Calendar(calendarBasicViewElement, calendarOptions);
+            calendar.render();
+
+            document.querySelectorAll('.sidebar-control').forEach(function (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function () {
+                    calendar.updateSize();
                 });
+            });
+            await loadEvents(calendar);
+            calendar.on('datesSet', function (info) {
+                loadEvents(calendar);
             });
         }
     };
 
-
-    //
-    // Return objects assigned to module
-    //
-
     return {
-        init: function() {
+        init: function () {
             _componentFullCalendarBasic();
         }
     }
 }();
 
-
-// Initialize module
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     FullCalendarBasic.init();
 });
