@@ -24,6 +24,37 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6 col-12">
+                        <label for="title" class="col-form-label">
+                            Nhóm<span class="required">*</span>
+                        </label>
+                        <select type="text" id="title" class="form-select" wire:model.live="teamId">
+                            @foreach($userTeams as $userTeam)
+                                <option value="{{$userTeam->id}}">{{ $userTeam->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label for="title" class="col-form-label">
+                            Hoạt động<span class="required">*</span>
+                        </label>
+                        <select type="text" id="title" class="form-select" wire:model.live="activityType">
+                            @foreach(ActivityType::cases() as $activityType)
+                                <option value="{{$activityType->value}}">{{ $activityType->description() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bold">
+                <i class="ph-clock"></i>
+                Thời gian
+            </div>
+            <div class="card-body">
+                <div class="row">
                     <div class="col-12 col-md-6">
                         <label for="title" class="col-form-label">
                             Ngày bắt đầu <span class="required">*</span>
@@ -41,7 +72,7 @@
                         @enderror
 
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 @if(!$this->showLoop) d-none @endif" wire:transition>
                         <label for="title" class="col-form-label">
                             Ngày kết kúc <span class="required">*</span>
                         </label>
@@ -50,7 +81,7 @@
 												<i class="ph-calendar"></i>
 											</span>
                             <input wire:model.live="endDate" type="text" id="endDate"
-                                   class="form-control datepicker-basic datepicker-input">
+                                   class="form-control datepicker-basic datepicker-input ">
                         </div>
                         @error('endDate')
                         <label id="error-username" class="validation-error-label text-danger"
@@ -82,29 +113,34 @@
 
                         </div>
                     </div>
-                    <div class="col-12 col-md-12">
-                       <div class="row">
-                           <div class="col-md-6 col-12">
-                               <label for="title" class="col-form-label">
-                                   Lặp lại
-                               </label>
-                               <select type="text" id="title" class="form-select" wire:model.live="loop">
-                                   @foreach(CalendarLoop::cases() as $calendarLoop)
-                                       <option value="{{$calendarLoop->value}}">{{ $calendarLoop->description() }}</option>
-                                   @endforeach
-                               </select>
-                           </div>
-                           @if($this->showOptionLoop)
-                           <div class="col-md-6 col-12 d-md-flex align-items-center"  wire:transition>
-                               <div class="text mt-4">
-                                   Tổng số tuần: {{$this->totalWeeks}}
-                               </div>
-                           </div>
-                           @endif
+                    @if($this->showLoop)
+                        <div class="col-12 col-md-12" wire:transition>
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <label for="title" class="col-form-label">
+                                        Lặp lại
+                                    </label>
+                                    <select type="text" id="title" class="form-select" wire:model.live="loop">
+                                        @foreach(CalendarLoop::cases() as $calendarLoop)
+                                            <option
+                                                value="{{$calendarLoop->value}}">{{ $calendarLoop->description() }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @if($this->showOptionLoop)
+                                    <div class="col-md-6 col-12 d-md-flex align-items-center" wire:transition>
+                                        <div class="text mt-4">
+                                            Tổng số tuần: {{$this->totalWeeks}}
+                                        </div>
+                                    </div>
+                                @endif
 
-                       </div>
-                    </div>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
+
                 @if($this->showOptionLoop)
                     <div class="row" wire:transition>
                         <div class="col-12">
@@ -113,8 +149,9 @@
                             </label>
                             <div class="list-day-of-week">
                                 @foreach(DayOfWeek::cases() as $dayOfWeek)
-                                    <div class="item-day-of-week @if(!$this->isSelectDayOfWeek($dayOfWeek->value)) disabled @endif @if($this->isActiveDayOfWeek($dayOfWeek->value)) active @endif "
-                                         wire:click="handleUpdateDayOfWeek({{$dayOfWeek->value}})">
+                                    <div
+                                        class="item-day-of-week @if(!$this->isSelectDayOfWeek($dayOfWeek->value)) disabled @endif @if($this->isActiveDayOfWeek($dayOfWeek->value)) active @endif "
+                                        wire:click="handleUpdateDayOfWeek({{$dayOfWeek->value}})">
                                         <div class="card">
                                             <div class="card-body">
                                                 {{$dayOfWeek->description()}}
@@ -127,45 +164,36 @@
                         </div>
                     </div>
                 @endif
-
-
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header bold">
-                <i class="ph-users-three"></i>
-                Nhóm - Hoạt động
-            </div>
-            <div class="card-body">
-                <div class="row">
+        @if($this->activityType == ActivityType::Seminar)
+            <div class="card" wire:transition>
+                <div class="card-header bold">
+                    <i class="ph-projector-screen-chart"></i>
+                    Hội thảo - Serminar
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-12">
                             <label for="title" class="col-form-label">
-                                Nhóm<span class="required">*</span>
+                                Tên người trình bày <span class="required">*</span>
                             </label>
-                            <select type="text" id="title" class="form-select" wire:model.live="teamId">
-                                @foreach($userTeams as $userTeam)
-                                    <option value="{{$userTeam->id}}">{{ $userTeam->name }}</option>
-                                @endforeach
-                            </select>
+                            <input wire:model.live="seminarUser" type="text" id="seminarUser" class="form-control">
+
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-12">
+                        <div class="col-12">
                             <label for="title" class="col-form-label">
-                                Hoạt động<span class="required">*</span>
+                                Nội dung <span class="required">*</span>
                             </label>
-                            <select type="text" id="title" class="form-select" wire:model.live="activityType">
-                                @foreach(ActivityType::cases() as $activityType)
-                                    <option value="{{$activityType->value}}">{{ $activityType->description() }}</option>
-                                @endforeach
-                            </select>
+                            <textarea wire:model.live="seminarContent"  id="seminarUser" class="form-control" rows="5"></textarea>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        @endif
     </div>
     <div class="col-md-3 col-12">
         <div class="card">

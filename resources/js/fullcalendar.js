@@ -54,11 +54,11 @@ const FullCalendarBasic = function () {
             navLinks: true,
             nowIndicator: true,
             weekNumberCalculation: 'ISO',
-            editable: true,
+            editable: false,
             height: 'auto',
             slotMinTime: "07:00",
             slotMaxTime: "20:00",
-            selectable: true,
+            selectable: false,
             dayMaxEvents: true,
             eventContent: function (arg) {
                 let arrayOfDomNodes = [];
@@ -77,7 +77,7 @@ const FullCalendarBasic = function () {
 
                 let imgEventWrap = document.createElement('div');
                 if (arg.event.extendedProps?.team?.thumbnail) {
-                    let imgEvent = `<img src="${arg.event.extendedProps?.team?.thumbnail}" > <span class="fc-event-team">${arg.event.extendedProps?.team?.name} </span>`;
+                    let imgEvent = `<span class="fc-event-team fc-sticky">${arg.event.extendedProps?.team?.name} </span>`;
                     imgEventWrap.classList = "fc-event-img";
                     imgEventWrap.innerHTML = imgEvent;
                 }

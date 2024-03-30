@@ -52,6 +52,10 @@ class CalendarCreate extends Component
 
     public int $teamId = 0;
 
+    public string $seminarUser = '';
+
+    public string $seminarContent = '';
+
     protected $listeners = [
         'update-start-date' => 'updateStartDate',
         'update-end-date' => 'updateEndDate',
@@ -101,6 +105,16 @@ class CalendarCreate extends Component
                 $calendar->save();
 
                 app(CalendarService::class)->createCalendarEvent($calendar);
+
+                if ($this->activityType == ActivityType::Seminar) {
+                    $event = $calendar->events()->first();
+                    $activity = $event->activity;
+                    $activity->title = $this->seminarUser;
+                    $activity->content = $this->seminarContent;
+                    $activity->save();
+                }
+
+
                 // Your code here
                 DB::commit();
                 $this->dispatch('alert', type: 'success', message: 'Tạo lịch thành công!');
@@ -133,6 +147,10 @@ class CalendarCreate extends Component
     {
         if (is_string($value)) {
             $value = ActivityType::fromValue($value);
+
+            if ($value == ActivityType::Seminar) {
+                $this->endDate = $this->startDate;
+            }
         }
     }
 
@@ -145,6 +163,10 @@ class CalendarCreate extends Component
 
         if ($this->loop == CalendarLoop::Weekly) {
             $this->setDayOfWeekFromStartDateToEndDate();
+        }
+
+        if ($this->activityType == ActivityType::Seminar) {
+            $this->endDate = $this->startDate;
         }
     }
 
@@ -248,7 +270,6 @@ class CalendarCreate extends Component
         return $this->loop !== CalendarLoop::None;
     }
 
-    //Tôi muốn tính số tuần dựa theo ngày bắt đầu và ngày kết thúc
     #[Computed]
     public function totalWeeks(): int
     {
@@ -257,4 +278,9 @@ class CalendarCreate extends Component
         return $startDate->diffInWeeks($endDate) + 1;
     }
 
+    #[Computed]
+    public function showLoop()
+    {
+        return $this->activityType !== ActivityType::Seminar;
+    }
 }

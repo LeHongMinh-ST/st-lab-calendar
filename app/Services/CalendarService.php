@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Common\Constants;
 use App\Enums\CalendarLoop;
 use App\Models\Activity;
 use App\Models\Calendar;
@@ -27,7 +26,8 @@ class CalendarService
 
     private function createEvent(Calendar $calendar): void
     {
-        $this->createActivityAndEvent($calendar, $calendar->start_day);
+        $startDate = Carbon::parse($calendar->start_day);
+        $this->createActivityAndEvent($calendar, $startDate);
     }
 
     private function createRecurringEvent(Calendar $calendar): void
@@ -52,6 +52,8 @@ class CalendarService
             'end_time' => $calendar->end_time,
             'day' => $dayTimestamp->timestamp,
         ]);
+
+
         $calendar->events()->create([
             'title' => $calendar->title,
             'start_time' => $calendar->start_time,
