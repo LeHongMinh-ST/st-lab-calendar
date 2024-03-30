@@ -32,10 +32,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
-    // Route::get('/edit', function () {
-    //     return view('pages.edit');
-    // });
-    Route::get('/edit', function () {
+    Route::get('/users/edit', function () {
         return view('pages.edit');
     });
     Route::get('/dashboard', function () {

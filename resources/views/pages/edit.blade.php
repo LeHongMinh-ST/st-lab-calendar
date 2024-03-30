@@ -4,7 +4,7 @@
             <div class="page-header-content d-lg-flex">
                 <div class="d-flex">
                     <h4 class="page-title mb-0">
-                        Home - <span class="fw-normal">Edit</span>
+                        Người dùng - <span class="fw-normal">Cập nhật thông tin người dùng</span>
                     </h4>
 
                     <a href="#page_header" class="btn btn-light align-self-center collapsed d-lg-none border-transparent rounded-pill p-0 ms-auto" data-bs-toggle="collapse">
@@ -19,6 +19,7 @@
                     <div class="breadcrumb py-2">
                         <a href="index.html" class="breadcrumb-item"><i class="ph-house"></i></a>
                         <a href="#" class="breadcrumb-item">Home</a>
+                        <span class="breadcrumb-item active">Users</span>
                         <span class="breadcrumb-item active">Edit</span>
                     </div>
 
@@ -81,7 +82,7 @@
                     
                     <hr>
                     <div class="d-flex justify-content-end align-items-center">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary"><i class = "ph-check-circle"></i>Update</button>
                     </div>
             </form>
 
@@ -110,14 +111,14 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
-                                <input type="text" value="" readonly class="form-control">
+                                <input type="text" value=""  class="form-control">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Mật khẩu hiện tại</label>
-                                <input type="password" value="" readonly class="form-control">
+                                <input type="password" value=""  class="form-control">
                             </div>
                         </div>
                     </div>
