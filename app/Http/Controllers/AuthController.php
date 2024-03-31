@@ -24,7 +24,8 @@ class AuthController extends Controller
     public function login(AuthLoginRequest $request): RedirectResponse
     {
         $request->merge([$this->username() => request()->input('username')]);
-        $credentials = request([$this->username(), 'password']);
+        $credentials = $request->only([$this->username(), 'password']);
+        ;
         if (!auth()->attempt($credentials, boolval($request->get('remember')))) {
             return redirect()->back()
                 ->withErrors(['message' => ['Vui lòng kiểm tra lại tài khoản hoặc mật khẩu!']])

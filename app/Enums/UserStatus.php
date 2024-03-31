@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Enums;
-enum Status: string
+enum UserStatus: string
 {
     case Active = 'active';
     case Inactive = 'inactive';
-    case Deleted = 'deleted';
 
     public function name(): string
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
     })->name('admin.dashboard');
+
+    Route::resource('/users', UserController::class);
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
+        Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    });
 
     Route::prefix('calendar')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
