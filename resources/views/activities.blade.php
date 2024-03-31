@@ -1,14 +1,14 @@
 <x-main-layout>
-    <div class="content">
+    <div class="content seminar">
 
         <!-- Basic view -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0 text-center">Hoạt động phòng Lab</h5>
+                <h3 class="mb-0 text-center">Hoạt động hội thảo - Seminar</h3>
             </div>
 
             <div class="card-body">
-
+              <x-seminar-section></x-seminar-section>
             </div>
         </div>
         <!-- /basic view -->

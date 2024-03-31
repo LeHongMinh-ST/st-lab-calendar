@@ -21,7 +21,7 @@
                     <div class="status-indicator-container">
                         <i class="ph-newspaper "></i>
                     </div>
-                    <span class="d-none d-lg-inline-block mx-lg-2">Lịch hoạt động</span>
+                    <span class="d-none d-lg-inline-block mx-lg-2">Lịch hoạt động - Seminar</span>
                 </a>
             </li>
             <li class="nav-item ms-lg-2">
