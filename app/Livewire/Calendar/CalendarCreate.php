@@ -74,27 +74,47 @@ class CalendarCreate extends Component
         $this->teamId = $this->userTeams->first()?->id ?? 0;
     }
 
-
-    public function submit(): RedirectResponse|null
+    private function isValidate():bool
     {
-        $this->validate();
-
         if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
-            return null;
+            return false;
         }
 
         if ($this->activityType == ActivityType::Seminar && !$this->seminarUser) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập tên người trình bày!');
-            return null;
+            return false;
 
         }
 
         if ($this->activityType == ActivityType::Seminar && !$this->seminarContent) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập nội dung buổi seminar!');
-            return null;
-
+            return false;
         }
+
+
+        if ($this->startTime >= $this->endTime) {
+            $this->dispatch('alert', type: 'error', message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu!');
+            return false;
+        }
+
+        if ($this->startDate > $this->endDate) {
+            $this->dispatch('alert', type: 'error', message: 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu!');
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function submit(): RedirectResponse|null
+    {
+        $this->validate();
+
+        if (!$this->isValidate()) {
+            return null;
+        }
+
 
         if (!$this->isLoading) {
             $this->isLoading = true;
