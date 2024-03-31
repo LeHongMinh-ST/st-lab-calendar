@@ -46,5 +46,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::prefix('calendar')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
         Route::get('/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
+        Route::get('/{id}/edit', [CalendarController::class, 'edit'])->name('admin.calendar.edit');
+        Route::get('/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
     });
 });

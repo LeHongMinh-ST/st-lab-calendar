@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.calendar.index')}}"
                        class="nav-link {{ request()->routeIs('events') ? 'active' : '' }}">
                         <i class="ph-calendar"></i>
                         <span>Lịch đã đăng ký</span>
