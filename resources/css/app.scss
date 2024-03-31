@@ -22,7 +22,21 @@
     }
 }
 
-
+.navbar-st {
+    --navbar-bg: #1376bc;
+    --navbar-hover-bg: rgba(var(--white-rgb), 0.1);
+    --navbar-disabled-bg: transparent;
+    --navbar-hover-active-bg: rgba(var(--white-rgb), 0.15);
+    --navbar-hover-active-color: #fff;
+    --navbar-active-bg: rgba(var(--white-rgb), 0.15);
+    --navbar-color: #fff;
+    --navbar-link-color: #fff;
+    --navbar-link-hover-color: #fff;
+    --navbar-hover-color: #fff;
+    //.navbar-nav-link {
+    //    color: var(--navbar-color);
+    //}
+}
 
 
 .required {
