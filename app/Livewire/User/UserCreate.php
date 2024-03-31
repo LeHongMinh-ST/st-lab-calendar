@@ -3,7 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Enums\Role;
-use App\Enums\Status;
+use App\Enums\UserStatus;
 use App\Models\User;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -66,7 +66,7 @@ class UserCreate extends Component
     {
         return view('livewire.user.user-create')->with([
             'roles' => Role::displayAll(),
-            'statuses' => Status::displayAll(),
+            'statuses' => UserStatus::displayAll(),
         ]);
     }
 

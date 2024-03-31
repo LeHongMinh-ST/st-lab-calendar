@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Role;
-use App\Enums\Status;
+use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -57,7 +57,7 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'boolean',
         'role' => Role::class,
-        'status' => Status::class,
+        'status' => UserStatus::class,
     ];
 
     public function setPasswordAttribute($password): void
@@ -98,8 +98,8 @@ class User extends Authenticatable
     {
         if($this->status == NULL) return '<span class="badge bg-success bg-opacity-20 text-success">Hoạt động</span>';
         return match ($this->status) {
-            Status::Active => '<span class="badge bg-success bg-opacity-20 text-success">Hoạt động</span>',
-            Status::Inactive => '<span class="badge bg-danger bg-opacity-20 text-danger">Tạm khóa</span>',
+            UserStatus::Active => '<span class="badge bg-success bg-opacity-20 text-success">Hoạt động</span>',
+            UserStatus::Inactive => '<span class="badge bg-danger bg-opacity-20 text-danger">Tạm khóa</span>',
         };
     }
 

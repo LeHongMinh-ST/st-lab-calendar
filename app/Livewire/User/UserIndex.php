@@ -3,7 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Enums\Role;
-use App\Enums\Status;
+use App\Enums\UserStatus;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -38,7 +38,7 @@ class UserIndex extends Component
         return view('livewire.user.user-index')->with([
             'users' => $users,
             'roles' => Role::displayAll(),
-            'statuses' => Status::displayAll(),
+            'statuses' => UserStatus::displayAll(),
         ]);
     }
 
