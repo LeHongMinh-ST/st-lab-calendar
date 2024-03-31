@@ -20,10 +20,11 @@
             </div>
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive-md">
             <table class="table fs-table ">
                 <thead>
                 <tr class="table-light">
+                    <th>STT</th>
                     <th>TÊN TÀI KHOẢN</th>
                     <th>EMAIL</th>
                     <th>VAI TRÒ</th>
@@ -35,41 +36,29 @@
                 <tbody>
                 @forelse($users as $user)
                     <tr>
+                        <td>{{ $loop->index + 1 + $users->perPage() * ($users->currentPage() - 1)   }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{!! $user->roleText !!}</td>
                         <td>{{ $user->created_at->format('d-m-Y') }}</td>
                         <td>{!! $user->statusText !!}</td>
                         <td class="text-center">
-                            <div class="dropdown">
+                            <div class="dropdown ">
                                 <a href="#" class="text-body" data-bs-toggle="dropdown">
                                     <i class="ph-list"></i>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="#" class="dropdown-item">
-                                        <i class="ph-file-pdf me-2"></i>
-                                        Export to .pdf
+                                    <a href="{{route('admin.users.edit', $user->id)}}" class="dropdown-item">
+                                        <i class="ph-note-pencil"></i>
+                                        Chỉnh sửa
                                     </a>
-                                    <a href="#" class="dropdown-item">
-                                        <i class="ph-file-xls me-2"></i>
-                                        Export to .csv
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                        <i class="ph-file-doc me-2"></i>
-                                        Export to .doc
+                                    <a type="button" @click="$wire.openDeleteModal({{ $user->id }})" href="#" class="dropdown-item">
+                                        <i class="ph-trash"></i>
+                                        Xóa
                                     </a>
                                 </div>
                             </div>
                         </td>
-{{--                        <td class="d-flex gap-1 justify-content-center py-1">--}}
-{{--                            <button type="button" class="btn btn-primary btn-icon p-lg-1">--}}
-{{--                                <i class="ph-note-pencil"></i>--}}
-{{--                            </button>--}}
-{{--                            <button type="button" class="btn btn-danger btn-icon p-lg-1">--}}
-{{--                                <i class="ph-trash"></i>--}}
-{{--                            </button>--}}
-{{--                        </td>--}}
                     </tr>
                 @empty
                     <tr>
@@ -80,12 +69,7 @@
                 @endforelse
                 </tbody>
             </table>
-
         </div>
     </div>
-            {{--        <div class="per_page" wire:ignore>--}}
-
-            {{--        </div>--}}
-            {{ $users->links('vendor.pagination.theme') }}
-            {{--            {{ $users->appends(request()->input())->links() }}--}}
+    {{ $users->links('vendor.pagination.theme') }}
 </div>

@@ -40,6 +40,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
     });
 
     Route::prefix('calendar')->group(function () {

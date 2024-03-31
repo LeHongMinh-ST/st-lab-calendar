@@ -44,7 +44,9 @@ class  UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('pages.user.update')->with([
+            'id' => $id
+        ]);
     }
 
     /**

@@ -11,12 +11,20 @@ use Livewire\WithPagination;
 class UserIndex extends Component
 {
     use WithPagination;
+    public mixed $userId = null;
     public string $search = '';
     public string $role = '';
     public string $status = '';
 
     protected $listeners = [
+        'deleteUser' => 'destroy',
     ];
+
+    public function openDeleteModal($id): void
+    {
+        $this->userId = $id;
+        $this->dispatch('openDeleteModal');
+    }
 
     public function render()
     {
@@ -32,5 +40,24 @@ class UserIndex extends Component
             'roles' => Role::displayAll(),
             'statuses' => Status::displayAll(),
         ]);
+    }
+
+    public function destroy()
+    {
+        try {
+            if (auth()->user()->id == $this->userId) {
+                $this->dispatch('alert', type: 'error', message: 'Không thể xóa tài khoản đang đăng nhập!');
+                return;
+            }
+            User::destroy($this->userId);
+            $this->dispatch('alert', type: 'success', message: 'Xóa thành công!');
+        } catch (\Exception $e) {
+            \Log::error('Error delete user', [
+                'method' => __METHOD__,
+                'message' => $e->getMessage()
+            ]);
+
+            $this->dispatch('alert', type: 'error', message: 'Xóa thất bại!');
+        }
     }
 }

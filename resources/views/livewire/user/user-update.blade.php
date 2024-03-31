@@ -8,10 +8,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <label for="username" class="col-form-label">
+                        <label for="username" class="col-form-label" wire:ignore>
                             Tên tài khoản <span class="required">*</span>
                         </label>
-                        <input wire:model.live="username" type="text" id="username" class="form-control">
+                        <input wire:model="username" type="text" id="username" disabled class="form-control">
                         @error('username')
                         <label id="error-username" class="validation-error-label text-danger"
                                for="username">{{ $message }}</label>
@@ -33,11 +33,11 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <label for="password" class="col-form-label">
-                            Mật khẩu <span class="required">*</span>
+                        <label for="full_name" class="col-form-label">
+                            Họ và tên <span class="required">*</span>
                         </label>
-                        <input wire:model.live="password" type="password" id="password" class="form-control">
-                        @error('password')
+                        <input wire:model.live="full_name" type="text" id="full_name" class="form-control">
+                        @error('full_name')
                         <label id="error-username" class="validation-error-label text-danger"
                                for="username">{{ $message }}</label>
                         @enderror
@@ -56,19 +56,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-16">
-                        <label for="full_name" class="col-form-label">
-                            Họ và tên <span class="required">*</span>
-                        </label>
-                        <input wire:model.live="full_name" type="text" id="full_name" class="form-control">
-                        @error('full_name')
-                        <label id="error-username" class="validation-error-label text-danger"
-                               for="username">{{ $message }}</label>
-                        @enderror
-                    </div>
-                </div>
-                <div class="row">
+                <div class="row {{$userId == auth()->user()->id  ? 'd-none' : ''}}">
                     <div class="col-6">
                         <label for="role" class="col-form-label">
                             Vai trò <span class="required">*</span>
@@ -110,7 +98,7 @@
                 Hành động
             </div>
             <div class="card-body d-flex align-items-center gap-1">
-                <button class="btn btn-primary" @click="$wire.submit"><i class="ph-floppy-disk"></i> Lưu</button>
+                <button class="btn btn-primary" @click="$wire.update"><i class="ph-floppy-disk"></i> Cập nhật</button>
                 <a href="{{route('admin.users.index')}}" type="button" class="btn btn-warning"><i class="ph-arrow-counter-clockwise"></i> Trở lại</a>
             </div>
         </div>
