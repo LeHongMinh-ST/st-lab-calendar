@@ -63,7 +63,7 @@
                            <span class="input-group-text">
 												<i class="ph-calendar"></i>
 											</span>
-                            <input wire:model="startDate" type="text" id="startDate"
+                            <input wire:model="startDate" type="text" id="startDate" value="{{ $this->startDate }}"
                                    class="form-control datepicker-basic datepicker-input">
                         </div>
                         @error('startDate')
@@ -80,7 +80,7 @@
                            <span class="input-group-text">
 												<i class="ph-calendar"></i>
 											</span>
-                            <input wire:model.live="endDate" type="text" id="endDate"
+                            <input wire:model.live="endDate" type="text" id="endDate" value="{{ $this->endDate }}"
                                    class="form-control datepicker-basic datepicker-input ">
                         </div>
                         @error('endDate')
@@ -96,13 +96,13 @@
                         </label>
                         <div class="row">
                             <div class="col-md-4 col-5">
-                                <input type="time" class="form-control" wire:model.live="startTime">
+                                <input type="time" class="form-control" wire:model.live="startTime" value="{{ $this->startTime }}">
                             </div>
                             <div class="col-md-1 col-2 d-flex align-items-center justify-content-center">
                                 <div class="tilde d-flex align-items-center justify-content-center">~</div>
                             </div>
                             <div class="col-md-4 col-5">
-                                <input type="time" class="form-control" wire:model.live="endTime"
+                                <input type="time" class="form-control" wire:model.live="endTime" value="{{ $this->endTime }}"
                                        max="{{$this->maxTime}}">
                             </div>
                             @if($this->totalTime)

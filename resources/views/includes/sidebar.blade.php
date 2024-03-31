@@ -86,7 +86,7 @@
                     <a href=""
                        class="nav-link">
                         <i class="ph-activity"></i>
-                        <span>Hoạt động</span>
+                        <span>Hoạt động nhóm</span>
                     </a>
                 </li>
                 <li class="nav-item-header pt-0">

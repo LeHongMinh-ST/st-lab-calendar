@@ -134,16 +134,11 @@ class CalendarCreate extends Component
 
                 $calendar->save();
 
-                app(CalendarService::class)->createCalendarEvent($calendar);
-
-                if ($this->activityType == ActivityType::Seminar) {
-                    $event = $calendar->events()->first();
-                    $activity = $event->activity;
-                    $activity->title = $this->seminarUser;
-                    $activity->content = $this->seminarContent;
-                    $activity->save();
-                }
-
+                CalendarService::forCalendar($calendar)
+                    ->withActivityType($this->activityType)
+                    ->withSeminarUser($this->seminarUser)
+                    ->withContent($this->seminarContent)
+                    ->createCalendarEvent();
 
                 // Your code here
                 DB::commit();
@@ -181,6 +176,13 @@ class CalendarCreate extends Component
             if ($value == ActivityType::Seminar) {
                 $this->endDate = $this->startDate;
             }
+        }
+    }
+
+    public function updatedStartTime($value): void
+    {
+        if ($value) {
+            $this->endTime = Carbon::parse($value)->addHour()->format(Constants::FORMAT_TIME);
         }
     }
 

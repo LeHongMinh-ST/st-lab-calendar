@@ -16,15 +16,21 @@
 
 
         <ul class="nav flex-row justify-content-end order-1 order-lg-2 align-items-center">
-            <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
+            <li class="nav-item ms-lg-2">
+                <a href="{{ route('activities') }}" class="navbar-nav-link align-items-center rounded-pill p-1">
+                    <div class="status-indicator-container">
+                        <i class="ph-newspaper "></i>
+                    </div>
+                    <span class="d-none d-lg-inline-block mx-lg-2">Lịch hoạt động</span>
+                </a>
+            </li>
+            <li class="nav-item ms-lg-2">
                 <a href="{{ route('home') }}" class="navbar-nav-link align-items-center rounded-pill p-1">
                     <div class="status-indicator-container">
                         <i class="ph-calendar "></i>
                     </div>
                     <span class="d-none d-lg-inline-block mx-lg-2">Thời khoá biểu</span>
                 </a>
-
-
             </li>
 
             @if(auth()->check())

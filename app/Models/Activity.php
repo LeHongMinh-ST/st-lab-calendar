@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\ActivityType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Activity extends Model
 {
@@ -23,10 +25,25 @@ class Activity extends Model
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
+        'type' => ActivityType::class,
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function event(): HasOne
+    {
+        return $this->HasOne(Event::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+        });
     }
 }

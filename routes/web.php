@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,9 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-//Route::get('/teams', function () {
-//    return view('pages.teams');
-//})->name('teams');
+Route::get('/activities', [HomeController::class, 'activities'])->name('activities');
 
-Route::get('/login',[AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('handleLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('handleLogout');

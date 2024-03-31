@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ActivityType;
 use App\Enums\CalendarLoop;
 use App\Models\Activity;
 use App\Models\Calendar;
@@ -9,63 +10,95 @@ use Carbon\Carbon;
 
 class CalendarService
 {
-    public function createCalendarEvent(Calendar $calendar): void
+    private Calendar $calendar;
+    private ActivityType $activityType = ActivityType::Report;
+    private string $seminarUser = '';
+    private string $content = '';
+
+    public static function forCalendar(Calendar $calendar): self
     {
-        $loop = $calendar->loop;
+        $instance = new self();
+        $instance->calendar = $calendar;
+        return $instance;
+    }
+
+    public function withActivityType(ActivityType $activityType): self
+    {
+        $this->activityType = $activityType;
+        return $this;
+    }
+
+    public function withSeminarUser(string $seminarUser): self
+    {
+        $this->seminarUser = $seminarUser;
+        return $this;
+    }
+
+    public function withContent(string $content): self
+    {
+        $this->content = $content;
+        return $this;
+    }
+
+    public function createCalendarEvent(): void
+    {
+        $loop = $this->calendar->loop;
 
         switch ($loop) {
             case CalendarLoop::None:
-                $this->createEvent($calendar);
+                $this->createEvent();
                 break;
             case CalendarLoop::Daily :
             case CalendarLoop::Weekly:
-                $this->createRecurringEvent($calendar);
+                $this->createRecurringEvent();
                 break;
         }
     }
 
-    private function createEvent(Calendar $calendar): void
+    private function createEvent(): void
     {
-        $startDate = Carbon::parse($calendar->start_day);
-        $this->createActivityAndEvent($calendar, $startDate);
+        $startDate = Carbon::parse($this->calendar->start_day);
+        $this->createActivityAndEvent($startDate);
     }
 
-    private function createRecurringEvent(Calendar $calendar): void
+    private function createRecurringEvent(): void
     {
-        $startDate = Carbon::parse($calendar->start_day);
-        $endDate = Carbon::parse($calendar->end_day);
+        $startDate = Carbon::parse($this->calendar->start_day);
+        $endDate = Carbon::parse($this->calendar->end_day);
         while ($startDate <= $endDate) {
-            if ($this->isRecurringDay($calendar, $startDate) || $calendar->loop === CalendarLoop::Daily) {
-                $this->createActivityAndEvent($calendar, $startDate);
+            if ($this->isRecurringDay($startDate) || $this->calendar->loop === CalendarLoop::Daily) {
+                $this->createActivityAndEvent($startDate);
             }
 
             $startDate->addDay();
         }
     }
 
-    private function createActivityAndEvent(Calendar $calendar, Carbon $dayTimestamp): void
+    private function createActivityAndEvent(Carbon $dayTimestamp): void
     {
-
         $activity = Activity::create([
-            'title' => $calendar->title,
-            'start_time' => $calendar->start_time,
-            'end_time' => $calendar->end_time,
-            'day' => $dayTimestamp->timestamp,
+            'title' => $this->calendar->title,
+            'start_time' => $this->calendar->start_time,
+            'end_time' => $this->calendar->end_time,
+            'type' => $this->activityType->value,
+            'owner' => $this->seminarUser,
+            'content' => $this->content ?? ''
         ]);
 
-
-        $calendar->events()->create([
-            'title' => $calendar->title,
-            'start_time' => $calendar->start_time,
-            'end_time' => $calendar->end_time,
+        $this->calendar->events()->create([
+            'title' => $this->calendar->title,
+            'start_time' => $this->calendar->start_time,
+            'end_time' => $this->calendar->end_time,
             'day' => $dayTimestamp->timestamp,
             'activity_id' => $activity->id,
-            'team_id' => $calendar->team_id,
+            'team_id' => $this->calendar->team_id,
+            'content' => $this->content ?? ''
         ]);
     }
 
-    private function isRecurringDay(Calendar $calendar, Carbon $date): bool
+
+    private function isRecurringDay(Carbon $date): bool
     {
-        return $calendar->loop === CalendarLoop::Weekly && in_array($date->dayOfWeek, $calendar->date_of_week);
+        return $this->calendar->loop === CalendarLoop::Weekly && in_array($date->dayOfWeek, $this->calendar->date_of_week);
     }
 }
