@@ -1,17 +1,22 @@
 <?php
 
 namespace App\Enums;
-enum Status: string
+enum Role: string
 {
-    case Active = 'active';
-    case Inactive = 'inactive';
-    case Deleted = 'deleted';
+    case Admin = 'admin';
+    case User = 'user';
 
     public function name(): string
     {
         return self::getName($this);
     }
 
+    /**
+     * all
+     *
+     * @param null $value
+     * @return mixed
+     */
     public static function displayAll($value = null): mixed
     {
         $display = [];
@@ -24,9 +29,10 @@ enum Status: string
     public static function getName(self $value): string
     {
         return match ($value) {
-            self::Active => trans('user.status.active'),
-            self::Inactive => trans('user.status.inactive'),
+            self::Admin => trans('user.role.admin'),
+            self::User => trans('user.role.user'),
         };
     }
+
 }
 

@@ -113,7 +113,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.users.index')}}"
                        class="nav-link">
                         <i class="ph-user"></i>
                         <span>Người dùng</span>
