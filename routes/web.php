@@ -36,7 +36,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         return view('pages.dashboard');
     })->name('admin.dashboard');
 
-    Route::resource('/users', UserController::class);
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
