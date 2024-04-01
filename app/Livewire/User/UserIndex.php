@@ -46,7 +46,7 @@ class UserIndex extends Component
     {
         try {
             if (auth()->user()->id == $this->userId) {
-                $this->dispatch('alert', type: 'error', message: 'Không thể xóa tài khoản đang đăng nhập!');
+                $this->dispatch('alert', type: 'success', message: 'Không thể xóa tài khoản đang đăng nhập!');
                 return;
             }
             User::destroy($this->userId);
@@ -56,7 +56,6 @@ class UserIndex extends Component
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
             ]);
-
             $this->dispatch('alert', type: 'error', message: 'Xóa thất bại!');
         }
     }

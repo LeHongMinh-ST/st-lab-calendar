@@ -28,6 +28,7 @@ class Event extends Model
     protected $casts = [
         'start_day' => DateTimeStamp::class,
         'end_day' => DateTimeStamp::class,
+        'day' => 'date',
     ];
 
     public function user(): BelongsTo

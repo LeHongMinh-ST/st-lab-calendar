@@ -85,15 +85,14 @@ class UserCreate extends Component
                 'role' => $this->role,
                 'status' => $this->status
             ]);
-
-            $this->dispatch('alert', type: 'success', message: 'Tạo mới thành công!');
+            session()->flash('success', 'Tạo mới thành công!');
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
+            $this->dispatch('alert', type: 'error', message: 'Tạo mới thất bại!');
             \Log::error('Error create user', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
             ]);
-            $this->dispatch('alert', type: 'success', message: 'Tạo mới thất bại!');
         }
     }
 }

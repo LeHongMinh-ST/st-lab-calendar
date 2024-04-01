@@ -8,7 +8,7 @@
             </div>
             <div class="d-flex gap-2">
                 <div>
-                    <a href="{{route('admin.users.create')}}" type="button" class="btn btn-primary btn-icon px-2">
+                    <a href="{{route('admin.calendar.create')}}" type="button" class="btn btn-primary btn-icon px-2">
                         <i class="ph-plus-circle px-1"></i><span>Thêm mới</span>
                     </a>
                 </div>
@@ -25,35 +25,40 @@
                 <thead>
                 <tr class="table-light">
                     <th>STT</th>
-                    <th>TÊN TÀI KHOẢN</th>
-                    <th>EMAIL</th>
-                    <th>VAI TRÒ</th>
-                    <th>NGÀY TẠO</th>
+                    <th>TIÊU ĐỀ</th>
+                    <th>NHÓM PHỤ TRÁCH</th>
+                    <th>NGÀY BẮT ĐẦU</th>
+                    <th>NGÀY KẾT THÚC</th>
                     <th>TRẠNG THÁI</th>
                     <th class="text-center">HÀNH ĐỘNG</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($users as $user)
+                @forelse($calendars as $calendar)
                     <tr>
-                        <td>{{ $loop->index + 1 + $users->perPage() * ($users->currentPage() - 1)   }}</td>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{!! $user->roleText !!}</td>
-                        <td>{{ $user->created_at->format('d-m-Y') }}</td>
-                        <td>{!! $user->statusText !!}</td>
+                        <td class="w-16px">{{ $loop->index + 1 + $calendars->perPage() * ($calendars->currentPage() - 1)   }}</td>
+                        <td class="single-line-text">{{ $calendar->title }}</td>
+                        <td>{{ $calendar->team->name }}</td>
+                        <td>{{ $calendar->start_day}}</td>
+                        <td>{{ $calendar->end_day}}</td>
+                        <td>{!! $calendar->statusText !!}</td>
                         <td class="text-center">
                             <div class="dropdown ">
                                 <a href="#" class="text-body" data-bs-toggle="dropdown">
                                     <i class="ph-list"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="{{route('admin.users.edit', $user->id)}}" class="dropdown-item">
-                                        <i class="ph-note-pencil px-1"></i>
+                                    <a href="{{route('admin.users.edit', $calendar->id)}}" class="dropdown-item
+                                    {{in_array($calendar->status, [\App\Enums\Status::Active]) ? 'd-none' : ''}}">
+                                        <i class="px-1 ph-note-pencil"></i>
                                         Chỉnh sửa
                                     </a>
-                                    <a type="button" @click="$wire.openDeleteModal({{ $user->id }})" href="#" class="dropdown-item">
-                                        <i class="ph-trash px-1"></i>
+                                    <a href="{{route('admin.calendar.show', $calendar->id)}}" class="dropdown-item">
+                                        <i class="px-1 ph-eye"></i>
+                                        Chỉ tiết
+                                    </a>
+                                    <a type="button" @click="$wire.openDeleteModal({{ $calendar->id }})" href="#" class="dropdown-item">
+                                        <i class="px-1 ph-trash"></i>
                                         Xóa
                                     </a>
                                 </div>
@@ -71,5 +76,5 @@
             </table>
         </div>
     </div>
-    {{ $users->links('vendor.pagination.theme') }}
+    {{ $calendars->links('vendor.pagination.theme') }}
 </div>

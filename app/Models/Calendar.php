@@ -36,6 +36,19 @@ class Calendar extends Model
         'end_day' => DateTimeStamp::class,
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('title', 'like', '%' . $search . '%');
+    }
+
+    public function getStatusTextAttribute(): string
+    {
+        return match ($this->status) {
+            Status::Active => '<span class="badge bg-success bg-opacity-20 text-success">Đã duyệt</span>',
+            Status::Inactive => '<span class="badge bg-danger bg-opacity-20 text-danger">Chờ duyệt</span>',
+        };
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

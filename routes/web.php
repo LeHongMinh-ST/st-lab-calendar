@@ -36,7 +36,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         return view('pages.dashboard');
     })->name('admin.dashboard');
 
-    Route::resource('/users', UserController::class);
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -46,5 +45,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::prefix('calendar')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
         Route::get('/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
+        Route::get('/{id}/edit', [CalendarController::class, 'edit'])->name('admin.calendar.edit');
+        Route::get('/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
     });
 });

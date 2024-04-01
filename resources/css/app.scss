@@ -22,6 +22,12 @@
     }
 }
 
+.single-line-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
 .navbar-st {
     --navbar-bg: #1376bc;
     --navbar-hover-bg: rgba(var(--white-rgb), 0.1);

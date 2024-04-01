@@ -12,12 +12,26 @@ class CalendarController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        return view('admin.calendar.index');
+        return view('pages.calendar.index');
     }
 
 
     public function create(): View|Application|Factory
     {
         return view('pages.calendar.create');
+    }
+
+    public function edit($id): View|Application|Factory
+    {
+        return view('pages.calendar.update')->with([
+            'id' => $id
+        ]);
+    }
+
+    public function show($id): View|Application|Factory
+    {
+        return view('pages.calendar.detail')->with([
+            'id' => $id
+        ]);
     }
 }
