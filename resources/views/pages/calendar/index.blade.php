@@ -1,6 +1,6 @@
 <x-admin-layout>
     <x-slot name="custom_js">
-        @vite(['resources/js/user/index.js'])
+        @vite(['resources/js/calendar/index.js'])
     </x-slot>
     <x-slot name="header">
         <div class="page-header page-header-light shadow">
@@ -20,8 +20,8 @@
             <div class="page-header-content d-lg-flex border-top">
                 <div class="d-flex">
                     <div class="breadcrumb py-2">
-                        <a href="index.html" class="breadcrumb-item"><i class="ph-house"></i></a>
-                        <a href="#" class="breadcrumb-item">Lịch</a>
+                        <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <a href="{{route('admin.calendar.index')}}" class="breadcrumb-item">Lịch</a>
                         <span class="breadcrumb-item active">Danh sách lịch</span>
                     </div>
 

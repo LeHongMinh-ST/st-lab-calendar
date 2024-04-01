@@ -13,8 +13,8 @@
             <div class="page-header-content d-lg-flex border-top">
                 <div class="d-flex">
                     <div class="breadcrumb py-2">
-                        <a href="index.html" class="breadcrumb-item"><i class="ph-house"></i></a>
-                        <a href="#" class="breadcrumb-item">Lịch</a>
+                        <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <a href="{{route('admin.calendar.index')}}" class="breadcrumb-item">Lịch</a>
                         <span class="breadcrumb-item active">Đăng ký lịch</span>
                     </div>
 

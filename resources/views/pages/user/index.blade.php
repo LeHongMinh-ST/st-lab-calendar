@@ -20,8 +20,8 @@
             <div class="page-header-content d-lg-flex border-top">
                 <div class="d-flex">
                     <div class="breadcrumb py-2">
-                        <a href="index.html" class="breadcrumb-item"><i class="ph-house"></i></a>
-                        <a href="#" class="breadcrumb-item">Người dùng</a>
+                        <a href="{{route('admin.dashboard')}}" class="breadcrumb-item"><i class="ph-house"></i></a>
+                        <a href="{{route('admin.users.index')}}" class="breadcrumb-item">Người dùng</a>
                         <span class="breadcrumb-item active">Danh sách người dùng</span>
                     </div>
 

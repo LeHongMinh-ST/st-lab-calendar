@@ -107,7 +107,7 @@ class UserUpdate extends Component
 
         try {
             User::where('id', $this->userId)->update($payload);
-            $this->dispatch('alert', type: 'success', message: 'Cập nhật thành công!');
+            session()->flash('success', 'Cập nhật thành công');
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             \Log::error('Error update user', [

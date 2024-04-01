@@ -49,11 +49,11 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a href="{{route('admin.users.edit', $user->id)}}" class="dropdown-item">
-                                        <i class="ph-note-pencil"></i>
+                                        <i class="ph-note-pencil px-1"></i>
                                         Chỉnh sửa
                                     </a>
                                     <a type="button" @click="$wire.openDeleteModal({{ $user->id }})" href="#" class="dropdown-item">
-                                        <i class="ph-trash"></i>
+                                        <i class="ph-trash px-1"></i>
                                         Xóa
                                     </a>
                                 </div>

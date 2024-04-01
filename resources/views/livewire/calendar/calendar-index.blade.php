@@ -48,7 +48,8 @@
                                     <i class="ph-list"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="{{route('admin.users.edit', $calendar->id)}}" class="dropdown-item">
+                                    <a href="{{route('admin.users.edit', $calendar->id)}}" class="dropdown-item
+                                    {{in_array($calendar->status, [\App\Enums\Status::Active]) ? 'd-none' : ''}}">
                                         <i class="px-1 ph-note-pencil"></i>
                                         Chỉnh sửa
                                     </a>
