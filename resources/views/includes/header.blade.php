@@ -43,7 +43,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">
+                        <a href="{{route('admin.coming-soon')}}" class="dropdown-item">
                             <i class="ph-gear me-2"></i>
                             Tài khoản
                         </a>

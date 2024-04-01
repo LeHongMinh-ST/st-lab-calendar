@@ -48,4 +48,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [CalendarController::class, 'edit'])->name('admin.calendar.edit');
         Route::get('/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
     });
+
+    Route::get('coming-soon', function () {
+       return view('coming-soon');
+    })->name('admin.coming-soon');
 });

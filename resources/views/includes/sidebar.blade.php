@@ -31,7 +31,7 @@
         <div class="sidebar-section">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.coming-soon')}}"
                        class="nav-link">
                         <i class="ph-house"></i>
                         <span>Dashboard</span>
@@ -76,14 +76,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.coming-soon')}}"
                        class="nav-link">
                         <i class="ph-note-blank"></i>
                         <span>Nhật ký - Phản ánh</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.coming-soon')}}"
                        class="nav-link">
                         <i class="ph-activity"></i>
                         <span>Hoạt động nhóm</span>
@@ -94,7 +94,7 @@
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{route('admin.coming-soon')}}"
                        class="nav-link">
                         <i class="ph-chart-bar"></i>
                         <span>Báo cáo - Thống kê</span>
@@ -104,13 +104,6 @@
                 <li class="nav-item-header pt-0">
                     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Quản lý hệ thống</div>
                     <i class="ph-dots-three sidebar-resize-show"></i>
-                </li>
-                <li class="nav-item">
-                    <a href=""
-                       class="nav-link">
-                        <i class="ph-gear"></i>
-                        <span>Cấu hình hệ thống</span>
-                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('admin.users.index')}}"
