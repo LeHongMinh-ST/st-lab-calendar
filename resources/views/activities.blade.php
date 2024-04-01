@@ -4,7 +4,7 @@
         <!-- Basic view -->
         <div class="card">
             <div class="card-header">
-                <h3 class="mb-0 text-center">Hoạt động hội thảo - Seminar</h3>
+                <h3 class="mb-0 text-center">CÁC SỰ KIỆN SẮP DIỄN RA</h3>
             </div>
 
             <div class="card-body">
