@@ -48,6 +48,12 @@ class ProfileUpdate extends Component
     }
     public function render()
     {
+        $this->userId = auth()->id();
+        $user = User::find($this->userId);
+        $this->username = $user->username ?? '';
+        $this->full_name = $user->full_name ?? '';
+        $this->email = $user->email ?? '';
+        $this->phone_number = $user->phone_number ?? '';
         return view('livewire.profile.profile-update');
     }
 
