@@ -27,5 +27,6 @@ class EventController extends Controller
             ->get();
 
         return new EventCollection($events);
+
     }
 }
