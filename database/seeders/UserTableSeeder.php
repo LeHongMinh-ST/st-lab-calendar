@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -10,7 +12,7 @@ class UserTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         self::checkIssetBeforeCreate([
             'username' => 'admin',
@@ -21,7 +23,7 @@ class UserTableSeeder extends Seeder
         ]);
     }
 
-    private function checkIssetBeforeCreate($data)
+    private function checkIssetBeforeCreate($data): void
     {
         $admin = User::where('email', $data['email'])->first();
         if (empty($admin)) {

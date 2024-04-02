@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Calendar;
 
 use App\Common\Constants;
@@ -9,6 +11,7 @@ use App\Models\Calendar;
 use App\Models\Team;
 use App\Services\CalendarService;
 use DateTime;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -54,12 +57,12 @@ class CalendarCreate extends Component
 
     public string $seminarContent = '';
 
+    public bool $isLoading = false;
+
     protected $listeners = [
         'update-start-date' => 'updateStartDate',
         'update-end-date' => 'updateEndDate',
     ];
-
-    public bool $isLoading = false;
 
     public function mount(): void
     {
@@ -71,51 +74,15 @@ class CalendarCreate extends Component
         $this->teamId = $this->userTeams->first()?->id ?? 0;
     }
 
-    private function isValidate(): bool
-    {
-        if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
-            $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
-
-            return false;
-        }
-
-        if ($this->activityType == ActivityType::Seminar && ! $this->seminarUser) {
-            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập tên người trình bày!');
-
-            return false;
-
-        }
-
-        if ($this->activityType == ActivityType::Seminar && ! $this->seminarContent) {
-            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập nội dung buổi seminar!');
-
-            return false;
-        }
-
-        if ($this->startTime >= $this->endTime) {
-            $this->dispatch('alert', type: 'error', message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu!');
-
-            return false;
-        }
-
-        if ($this->startDate > $this->endDate) {
-            $this->dispatch('alert', type: 'error', message: 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu!');
-
-            return false;
-        }
-
-        return true;
-    }
-
     public function submit(): ?RedirectResponse
     {
         $this->validate();
 
-        if (! $this->isValidate()) {
+        if ( ! $this->isValidate()) {
             return null;
         }
 
-        if (! $this->isLoading) {
+        if ( ! $this->isLoading) {
             $this->isLoading = true;
 
             DB::beginTransaction();
@@ -142,7 +109,7 @@ class CalendarCreate extends Component
                 DB::commit();
                 $this->dispatch('alert', type: 'success', message: 'Tạo lịch thành công!');
                 //                return redirect()->route('calendar.index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 DB::rollBack();
                 Log::error('Create Calendar', [
                     'method' => __METHOD__,
@@ -172,7 +139,7 @@ class CalendarCreate extends Component
         if (is_string($value)) {
             $value = ActivityType::fromValue($value);
 
-            if ($value == ActivityType::Seminar) {
+            if (ActivityType::Seminar === $value) {
                 $this->endDate = $this->startDate;
             }
         }
@@ -192,11 +159,11 @@ class CalendarCreate extends Component
         }
         $this->startDate = str_replace('/', '-', $value);
 
-        if ($this->loop == CalendarLoop::Weekly) {
+        if (CalendarLoop::Weekly === $this->loop) {
             $this->setDayOfWeekFromStartDateToEndDate();
         }
 
-        if ($this->activityType == ActivityType::Seminar) {
+        if (ActivityType::Seminar === $this->activityType) {
             $this->endDate = $this->startDate;
         }
     }
@@ -208,7 +175,7 @@ class CalendarCreate extends Component
         }
         $this->endDate = str_replace('/', '-', $value);
 
-        if ($this->loop == CalendarLoop::Weekly) {
+        if (CalendarLoop::Weekly === $this->loop) {
             $this->setDayOfWeekFromStartDateToEndDate();
         }
     }
@@ -219,18 +186,18 @@ class CalendarCreate extends Component
             $value = CalendarLoop::fromValue($value);
         }
 
-        if ($value == CalendarLoop::None) {
+        if (CalendarLoop::None === $value) {
             $this->dayOfWeek = [];
         }
 
-        if ($value == CalendarLoop::Weekly) {
+        if (CalendarLoop::Weekly === $value) {
             $this->setDayOfWeekFromStartDateToEndDate();
         }
     }
 
     public function handleUpdateDayOfWeek($value): void
     {
-        if (! $this->isSelectDayOfWeek($value)) {
+        if ( ! $this->isSelectDayOfWeek($value)) {
             return;
         }
 
@@ -282,7 +249,7 @@ class CalendarCreate extends Component
     public function maxTime(): string
     {
         if ($this->startDate && $this->endDate) {
-            if ($this->startDate == $this->endDate) {
+            if ($this->startDate === $this->endDate) {
                 $startTime = Carbon::parse($this->startTime);
 
                 return $startTime->copy()->subMinutes(30)->format(Constants::FORMAT_TIME);
@@ -295,13 +262,13 @@ class CalendarCreate extends Component
     #[Computed]
     public function showOptionLoop(): bool
     {
-        return $this->loop == CalendarLoop::Weekly;
+        return CalendarLoop::Weekly === $this->loop;
     }
 
     #[Computed]
     public function showEndDate(): bool
     {
-        return $this->loop !== CalendarLoop::None;
+        return CalendarLoop::None !== $this->loop;
     }
 
     #[Computed]
@@ -316,6 +283,42 @@ class CalendarCreate extends Component
     #[Computed]
     public function showLoop(): bool
     {
-        return $this->activityType !== ActivityType::Seminar;
+        return ActivityType::Seminar !== $this->activityType;
+    }
+
+    private function isValidate(): bool
+    {
+        if (CalendarLoop::Weekly === $this->loop && 0 === count($this->dayOfWeek)) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
+
+            return false;
+        }
+
+        if (ActivityType::Seminar === $this->activityType && ! $this->seminarUser) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập tên người trình bày!');
+
+            return false;
+
+        }
+
+        if (ActivityType::Seminar === $this->activityType && ! $this->seminarContent) {
+            $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập nội dung buổi seminar!');
+
+            return false;
+        }
+
+        if ($this->startTime >= $this->endTime) {
+            $this->dispatch('alert', type: 'error', message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu!');
+
+            return false;
+        }
+
+        if ($this->startDate > $this->endDate) {
+            $this->dispatch('alert', type: 'error', message: 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu!');
+
+            return false;
+        }
+
+        return true;
     }
 }

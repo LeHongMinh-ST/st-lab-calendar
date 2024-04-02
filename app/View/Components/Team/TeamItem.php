@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View\Components\Team;
 
 use Closure;
@@ -15,7 +17,7 @@ class TeamItem extends Component
         public string $title,
         public string $thumbnail,
     ) {
-        //
+
     }
 
     /**

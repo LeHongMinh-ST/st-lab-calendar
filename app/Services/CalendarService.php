@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\ActivityType;
@@ -73,7 +75,7 @@ class CalendarService
         $startDate = Carbon::parse($this->calendar->start_day);
         $endDate = Carbon::parse($this->calendar->end_day);
         while ($startDate <= $endDate) {
-            if ($this->isRecurringDay($startDate) || $this->calendar->loop === CalendarLoop::Daily) {
+            if ($this->isRecurringDay($startDate) || CalendarLoop::Daily === $this->calendar->loop) {
                 $this->createActivityAndEvent($startDate);
             }
 
@@ -105,6 +107,6 @@ class CalendarService
 
     private function isRecurringDay(Carbon $date): bool
     {
-        return $this->calendar->loop === CalendarLoop::Weekly && in_array($date->dayOfWeek, $this->calendar->date_of_week);
+        return CalendarLoop::Weekly === $this->calendar->loop && in_array($date->dayOfWeek, $this->calendar->date_of_week);
     }
 }

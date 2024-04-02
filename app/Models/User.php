@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -14,7 +16,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -67,9 +71,9 @@ class User extends Authenticatable
     public function scopeSearch($query, $search)
     {
         if ($search) {
-            $query->where('full_name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%')
-                ->orWhere('phone_number', 'like', '%'.$search.'%');
+            $query->where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone_number', 'like', '%' . $search . '%');
         }
 
         return $query;
@@ -77,7 +81,7 @@ class User extends Authenticatable
 
     public function scopeFilterRole($query, $role)
     {
-        if (boolval(trim($role))) {
+        if ((bool) (trim($role))) {
             $query->where('role', $role);
         }
 
@@ -86,7 +90,7 @@ class User extends Authenticatable
 
     public function scopeFilterStatus($query, $status)
     {
-        if (boolval(trim($status))) {
+        if ((bool) (trim($status))) {
             $query->where('status', $status);
         }
 
@@ -95,7 +99,7 @@ class User extends Authenticatable
 
     public function getStatusTextAttribute(): string
     {
-        if ($this->status == null) {
+        if (null === $this->status) {
             return '<span class="badge bg-success bg-opacity-20 text-success">Hoạt động</span>';
         }
 
@@ -111,7 +115,7 @@ class User extends Authenticatable
             return ' <span class="badge bg-info bg-opacity-10 text-info">Siêu quản trị</span>';
         }
 
-        return '<span class="badge bg-info bg-opacity-10 text-info">'.$this->role?->name().'</span>';
+        return '<span class="badge bg-info bg-opacity-10 text-info">' . $this->role?->name() . '</span>';
     }
 
     public function getIsAdminTextAttribute()

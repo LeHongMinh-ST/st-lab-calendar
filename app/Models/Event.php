@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\DateTimeStamp;
@@ -54,7 +56,7 @@ class Event extends Model
     {
         parent::boot();
 
-        static::creating(function ($query) {
+        static::creating(function ($query): void {
             $query->user_id = auth()->id();
             $query->status = Status::Active;
         });

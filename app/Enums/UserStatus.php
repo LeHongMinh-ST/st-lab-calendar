@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum UserStatus: string
 {
     case Active = 'active';
     case Inactive = 'inactive';
-
-    public function name(): string
-    {
-        return self::getName($this);
-    }
 
     public static function displayAll(): array
     {
@@ -28,5 +25,10 @@ enum UserStatus: string
             self::Active => trans('user.status.active'),
             self::Inactive => trans('user.status.inactive'),
         };
+    }
+
+    public function name(): string
+    {
+        return self::getName($this);
     }
 }

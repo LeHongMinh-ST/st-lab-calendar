@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Common;
 
 class Constants
 {
-    const FORMAT_DATE = 'd-m-Y';
+    public const FORMAT_DATE = 'd-m-Y';
 
-    const FORMAT_DATE_TIME = 'd-m-Y H:i:s';
+    public const FORMAT_DATE_TIME = 'd-m-Y H:i:s';
 
-    const FORMAT_TIME = 'H:i';
+    public const FORMAT_TIME = 'H:i';
 
-    const FORMAT_DATE_TIME_API = 'Y-m-d\TH:i:s';
+    public const FORMAT_DATE_TIME_API = 'Y-m-d\TH:i:s';
 
-    const TEAM_IMAGE_DEFAULT = 'assets/images/team.png';
+    public const TEAM_IMAGE_DEFAULT = 'assets/images/team.png';
 
-    const PER_PAGE_ADMIN = 10;
+    public const PER_PAGE_ADMIN = 10;
 }

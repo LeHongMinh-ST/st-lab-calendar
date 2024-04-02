@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\ActivityType;
@@ -42,7 +44,7 @@ class Activity extends Model
     {
         parent::boot();
 
-        static::creating(function ($query) {
+        static::creating(function ($query): void {
             $query->user_id = auth()->id();
         });
     }

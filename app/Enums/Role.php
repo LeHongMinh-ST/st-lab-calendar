@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum Role: string
 {
     case Admin = 'admin';
     case User = 'user';
-
-    public function name(): string
-    {
-        return self::getName($this);
-    }
 
     /**
      * all
@@ -31,5 +28,10 @@ enum Role: string
             self::Admin => trans('user.role.admin'),
             self::User => trans('user.role.user'),
         };
+    }
+
+    public function name(): string
+    {
+        return self::getName($this);
     }
 }

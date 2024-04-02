@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Calendar;
 
 use App\Enums\Status;
 use App\Models\Calendar;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -48,7 +51,7 @@ class CalendarIndex extends Component
     {
         try {
             $calendar = Calendar::find($this->calendarId);
-            if ($calendar->status == Status::Active) {
+            if (Status::Active === $calendar->status) {
                 $calendar->status = Status::Draft;
                 $calendar->save();
             } else {
@@ -59,7 +62,7 @@ class CalendarIndex extends Component
                 $calendar->delete();
             }
             $this->dispatch('alert', type: 'success', message: 'Xóa thành công!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error delete calendar', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage(),

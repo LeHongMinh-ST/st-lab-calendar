@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Enums\Status;
@@ -24,13 +26,13 @@ class AuthController extends Controller
     {
         $request->merge([$this->username() => request()->input('username')]);
         $credentials = $request->only([$this->username(), 'password']);
-        if (! auth()->attempt($credentials, boolval($request->get('remember')))) {
+        if ( ! auth()->attempt($credentials, (bool) ($request->get('remember')))) {
             return redirect()->back()
                 ->withErrors(['message' => ['Vui lòng kiểm tra lại tài khoản hoặc mật khẩu!']])
                 ->withInput();
         }
 
-        if (auth()->user()->status === Status::Inactive) {
+        if (Status::Inactive === auth()->user()->status) {
             auth()->logout();
 
             return redirect()->back()
@@ -41,15 +43,15 @@ class AuthController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    private function username(): string
-    {
-        return filter_var(request()->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-    }
-
     public function logout(): RedirectResponse
     {
         auth()->logout();
 
         return redirect()->route('login');
+    }
+
+    private function username(): string
+    {
+        return filter_var(request()->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
     }
 }

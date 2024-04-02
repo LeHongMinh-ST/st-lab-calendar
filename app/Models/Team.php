@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Common\Constants;
@@ -32,6 +34,6 @@ class Team extends Model
 
     public function getThumbnailAttribute($value): string
     {
-        return $value ? asset('storage/'.$value) : asset(Constants::TEAM_IMAGE_DEFAULT);
+        return $value ? asset('storage/' . $value) : asset(Constants::TEAM_IMAGE_DEFAULT);
     }
 }

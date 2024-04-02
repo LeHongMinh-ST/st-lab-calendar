@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\User;
 
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -52,7 +55,7 @@ class UserCreate extends Component
             'phone_number' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (! preg_match('/^[0-9]{10}$/', $value)) {
+                    if ( ! preg_match('/^[0-9]{10}$/', $value)) {
                         return $fail('số điện thoại chưa đúng định dạng ');
                     }
                 },
@@ -93,7 +96,7 @@ class UserCreate extends Component
             session()->flash('success', 'Tạo mới thành công!');
 
             return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->dispatch('alert', type: 'error', message: 'Tạo mới thất bại!');
             Log::error('Error create user', [
                 'method' => __METHOD__,

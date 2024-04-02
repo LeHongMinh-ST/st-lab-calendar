@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Calendar;
 
 use App\Models\Calendar;
@@ -14,11 +16,11 @@ class CalendarDetail extends Component
 {
     use WithPagination;
 
+    public $calendarId;
+
     private $calendar;
 
     private $events;
-
-    public $calendarId;
 
     public function mount($calendarId): void
     {

@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\User;
 
 use App\Common\Constants;
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -53,14 +56,14 @@ class UserIndex extends Component
     public function destroy(): void
     {
         try {
-            if (auth()->user()->id == $this->userId) {
+            if (auth()->user()->id === $this->userId) {
                 $this->dispatch('alert', type: 'success', message: 'Không thể xóa tài khoản đang đăng nhập!');
 
                 return;
             }
             User::destroy($this->userId);
             $this->dispatch('alert', type: 'success', message: 'Xóa thành công!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error delete user', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\DateTimeStamp;
@@ -38,7 +40,7 @@ class Calendar extends Model
 
     public function scopeSearch($query, $search)
     {
-        return $query->where('title', 'like', '%'.$search.'%');
+        return $query->where('title', 'like', '%' . $search . '%');
     }
 
     public function getStatusTextAttribute(): string
@@ -68,7 +70,7 @@ class Calendar extends Model
     {
         parent::boot();
 
-        static::creating(function ($query) {
+        static::creating(function ($query): void {
             $query->user_id = auth()->id();
             $query->status = Status::Active;
         });
