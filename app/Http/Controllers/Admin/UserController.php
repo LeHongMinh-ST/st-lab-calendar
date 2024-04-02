@@ -36,4 +36,24 @@ class UserController extends Controller
             'id' => $id,
         ]);
     }
+
+    public function updateProfile() {
+        return view('pages.profile.update');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
 }
