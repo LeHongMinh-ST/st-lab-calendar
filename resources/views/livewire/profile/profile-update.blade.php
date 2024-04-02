@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-6">
                     <label class="col-form-label col-lg-3">Ảnh đại diện</label>
-                    <input type="file" class="form-control" accept="image/*">
+                    <input wire:model.live="avatar" type="file" class="form-control" accept="image/*">
                 </div>
             </div>
             <div class="row">
@@ -75,7 +75,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
-                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        <button type="submit" wire:click="updateInfo" class="btn btn-primary">Cập nhật</button>
                     </div>
                 </div>
             </div>
@@ -84,11 +84,11 @@
         <div class="tab-pane fade" id="js-tab2" role="tabpanel">
             <div class="row">
                 <div class="col-6">
-                    <label for="password" class="col-form-label">
+                    <label for="old_password" class="col-form-label">
                         Mật khẩu cũ <span class="required">*</span>
                     </label>
-                    <input wire:model.live="password" type="password" id="password" class="form-control">
-                    @error('password')
+                    <input wire:model.live="old_password" type="password" id="old_password" class="form-control">
+                    @error('old_password')
                     <label id="error-username" class="validation-error-label text-danger"
                            for="username">{{ $message }}</label>
                     @enderror
@@ -108,19 +108,19 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <label for="confirm_password" class="col-form-label">
+                    <label for="retyped_password" class="col-form-label">
                         Xác nhận mật khẩu mới <span class="required">*</span>
                     </label>
-                    <input wire:model.live="confirm_password" type="password" id="confirm_password"
+                    <input wire:model.live="retyped_password" type="password" id="retyped_password"
                            class="form-control">
-                    @error('confirm_password')
+                    @error('retyped_password')
                     <label id="error-username" class="validation-error-label text-danger"
                            for="username">{{ $message }}</label>
                     @enderror
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
-                        <button type="submit" @click="$wire.updateInfo" class="btn btn-primary">Cập nhật</button>
+                        <button type="submit" wire:click="updatePassword" class="btn btn-primary">Cập nhật</button>
                     </div>
                 </div>
             </div>

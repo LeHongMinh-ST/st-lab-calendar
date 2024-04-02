@@ -11,21 +11,34 @@ class ProfileUpdate extends Component
 {
     public mixed $userId = null;
 
-    #[Validate(as: 'Tên tài khoản')]
+    public string $avatar = '';
+
+    #[Validate(as: 'tên tài khoản')]
     public string $username = '';
 
-    #[Validate(as: 'Họ và tên')]
+    #[Validate(as: 'họ và tên')]
     public string $full_name = '';
 
-    #[Validate(as: 'Email')]
+    #[Validate(as: 'email')]
     public string $email = '';
 
-    #[Validate(as: 'Số điện thoại')]
+    #[Validate(as: 'số điện thoại')]
     public string $phone_number = '';
+
+    #[Validate(as: 'mật khẩu cũ')]
+    public string $old_password = '';
+
+    #[Validate(as: 'mật khẩu mới')]
+    public string $new_password = '';
+
+    #[Validate(as: 'mật khẩu nhập lại')]
+    public string $retyped_password = '';
+
 
     public function rules(): array
     {
         return [
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'username' => [
                 'required',
                 'unique:users,username,' . $this->userId . ',id'
@@ -57,10 +70,11 @@ class ProfileUpdate extends Component
         return view('livewire.profile.profile-update');
     }
 
-    public function updateInfo()
+    public function updateInfo(): void
     {
         $this->validate();
         $payload = [
+            'avatar' => $this->avatar,
             'username' => $this->username,
             'full_name' => $this->full_name,
             'email' => $this->email,
@@ -77,5 +91,13 @@ class ProfileUpdate extends Component
             ]);
             $this->dispatch('alert', type: 'error', message: 'Cập nhật thất bại!');
         }
+    }
+
+    public function updatePassword(): void {
+        $this->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
+            'retyped_password' => 'required|same:new_password',
+        ]);
     }
 }
