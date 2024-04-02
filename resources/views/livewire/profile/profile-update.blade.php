@@ -17,6 +17,12 @@
         <div class="tab-pane fade show active" id="js-tab1" role="tabpanel">
             <div class="row">
                 <div class="col-6">
+                    <label class="col-form-label col-lg-3">Ảnh đại diện</label>
+                    <input type="file" class="form-control" accept="image/*">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
                     <label for="username" class="col-form-label">
                         Tên tài khoản <span class="required">*</span>
                     </label>
@@ -120,3 +126,4 @@
             </div>
         </div>
     </div>
+</div>
