@@ -14,10 +14,9 @@ enum Role: string
     /**
      * all
      *
-     * @param null $value
-     * @return mixed
+     * @return array
      */
-    public static function displayAll($value = null): mixed
+    public static function displayAll(): array
     {
         $display = [];
         foreach (self::cases() as $value) {

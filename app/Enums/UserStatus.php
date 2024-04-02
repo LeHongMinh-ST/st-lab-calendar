@@ -11,7 +11,7 @@ enum UserStatus: string
         return self::getName($this);
     }
 
-    public static function displayAll($value = null): mixed
+    public static function displayAll(): array
     {
         $display = [];
         foreach (self::cases() as $value) {
