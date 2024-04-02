@@ -52,10 +52,10 @@ class UserCreate extends Component
             'phone_number' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match("/^[0-9]{10}$/", $value)) {
+                    if (! preg_match('/^[0-9]{10}$/', $value)) {
                         return $fail('số điện thoại chưa đúng định dạng ');
                     }
-                }
+                },
             ],
             'password' => [
                 'required',
@@ -88,17 +88,19 @@ class UserCreate extends Component
                 'username' => $this->username,
                 'password' => $this->password,
                 'role' => $this->role,
-                'status' => $this->status
+                'status' => $this->status,
             ]);
             session()->flash('success', 'Tạo mới thành công!');
+
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             $this->dispatch('alert', type: 'error', message: 'Tạo mới thất bại!');
             Log::error('Error create user', [
                 'method' => __METHOD__,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
+
         return null;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Enums;
+
 enum UserStatus: string
 {
     case Active = 'active';
@@ -17,6 +18,7 @@ enum UserStatus: string
         foreach (self::cases() as $value) {
             $display[$value->value] = self::getName($value);
         }
+
         return $display;
     }
 
@@ -28,4 +30,3 @@ enum UserStatus: string
         };
     }
 }
-

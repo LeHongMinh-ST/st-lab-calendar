@@ -22,5 +22,4 @@ enum CalendarLoop: string
             self::Weekly => 'Hàng tuần',
         };
     }
-
 }

@@ -33,6 +33,5 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('seminar-item', SeminarItem::class);
         Blade::component('seminar-section', SeminarSection::class);
 
-
     }
 }

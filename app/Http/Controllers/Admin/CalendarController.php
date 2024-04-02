@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use \Illuminate\Contracts\View\View;
-use \Illuminate\Foundation\Application;
-use \Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 
 class CalendarController extends Controller
 {
@@ -14,7 +13,6 @@ class CalendarController extends Controller
     {
         return view('pages.calendar.index');
     }
-
 
     public function create(): View|Application|Factory
     {
@@ -24,14 +22,14 @@ class CalendarController extends Controller
     public function edit($id): View|Application|Factory
     {
         return view('pages.calendar.update')->with([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
     public function show($id): View|Application|Factory
     {
         return view('pages.calendar.detail')->with([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }

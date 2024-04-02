@@ -42,22 +42,23 @@ class UserUpdate extends Component
         $validate = [
             'username' => [
                 'required',
-                'unique:users,username,' . $this->userId . ',id'
+                'unique:users,username,'.$this->userId.',id',
             ],
             'email' => [
                 'required',
                 'email',
-                'unique:users,email,' . $this->userId . ',id'
+                'unique:users,email,'.$this->userId.',id',
             ],
             'full_name' => 'required',
             'phone_number' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match("/^[0-9]{10}$/", $value)) {
+                    if (! preg_match('/^[0-9]{10}$/', $value)) {
                         return $fail('số điện thoại chưa đúng định dạng ');
                     }
+
                     return true;
-                }
+                },
             ],
         ];
 
@@ -81,7 +82,8 @@ class UserUpdate extends Component
             'role' => $this->role,
             'status' => $this->status,
         ];
-        return collect($attributes)->filter(fn($value) => !empty(trim($value)))->toArray();
+
+        return collect($attributes)->filter(fn ($value) => ! empty(trim($value)))->toArray();
     }
 
     public function mount($userId): void
@@ -113,11 +115,12 @@ class UserUpdate extends Component
         try {
             User::where('id', $this->userId)->update($payload);
             session()->flash('success', 'Cập nhật thành công');
+
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             Log::error('Error update user', [
                 'method' => __METHOD__,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
             $this->dispatch('alert', type: 'error', message: 'Cập nhật thất bại!');
         }

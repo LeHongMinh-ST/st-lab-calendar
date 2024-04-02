@@ -18,8 +18,11 @@ class UserIndex extends Component
     use WithPagination;
 
     public string|int|null $userId = null;
+
     public string $search = '';
+
     public string $role = '';
+
     public string $status = '';
 
     protected $listeners = [
@@ -39,6 +42,7 @@ class UserIndex extends Component
             ->filterRole($this->role)
             ->filterStatus($this->status)
             ->paginate(Constants::PER_PAGE_ADMIN);
+
         return view('livewire.user.user-index')->with([
             'users' => $users,
             'roles' => Role::displayAll(),
@@ -51,6 +55,7 @@ class UserIndex extends Component
         try {
             if (auth()->user()->id == $this->userId) {
                 $this->dispatch('alert', type: 'success', message: 'Không thể xóa tài khoản đang đăng nhập!');
+
                 return;
             }
             User::destroy($this->userId);
@@ -58,7 +63,7 @@ class UserIndex extends Component
         } catch (\Exception $e) {
             Log::error('Error delete user', [
                 'method' => __METHOD__,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
             $this->dispatch('alert', type: 'error', message: 'Xóa thất bại!');
         }

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\Status;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TeamsTableSeeder extends Seeder

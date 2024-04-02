@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DateTimeStamp implements CastsAttributes
 {
-
     public function get(Model $model, string $key, mixed $value, array $attributes): ?string
     {
         return Carbon::createFromTimestamp($value)->format(Constants::FORMAT_DATE);
@@ -17,6 +16,6 @@ class DateTimeStamp implements CastsAttributes
 
     public function set(Model $model, string $key, mixed $value, array $attributes)
     {
-        return  Carbon::createFromFormat(Constants::FORMAT_DATE, $value)->timestamp;
+        return Carbon::createFromFormat(Constants::FORMAT_DATE, $value)->timestamp;
     }
 }

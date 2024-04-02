@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 
-class  UserController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class  UserController extends Controller
     public function edit(string $id): View|Application|Factory
     {
         return view('pages.user.update')->with([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }

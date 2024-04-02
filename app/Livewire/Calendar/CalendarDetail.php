@@ -15,6 +15,7 @@ class CalendarDetail extends Component
     use WithPagination;
 
     private $calendar;
+
     private $events;
 
     public $calendarId;
@@ -40,6 +41,7 @@ class CalendarDetail extends Component
     public function render(): View|Application|Factory
     {
         $this->getCalendar($this->calendarId);
+
         return view('livewire.calendar.calendar-detail')->with([
             'events' => $this->events,
             'calendar' => $this->calendar,

@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::table('activities', function (Blueprint $table) {
             if (Schema::hasColumn('activities', 'type')) {
-               if (Schema::getColumnType('activities', 'type') !=='enum') {
-                   $table->enum('type', array_map(fn ($activityType) => $activityType->value, ActivityType::cases()))
-                       ->nullable()
-                       ->default(ActivityType::Report->value)->change();
+                if (Schema::getColumnType('activities', 'type') !== 'enum') {
+                    $table->enum('type', array_map(fn ($activityType) => $activityType->value, ActivityType::cases()))
+                        ->nullable()
+                        ->default(ActivityType::Report->value)->change();
                 }
             }
         });

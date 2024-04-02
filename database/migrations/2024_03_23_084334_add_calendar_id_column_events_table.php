@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            if (!Schema::hasColumn('events', 'calendar_id')) {
+            if (! Schema::hasColumn('events', 'calendar_id')) {
                 $table->bigInteger('calendar_id')->nullable()->index()->after('id');
             }
         });

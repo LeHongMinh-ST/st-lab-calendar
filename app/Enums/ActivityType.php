@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ActivityType:string
+enum ActivityType: string
 {
     case Report = 'work';
     case Seminar = 'seminar';
@@ -17,5 +17,3 @@ enum ActivityType:string
         };
     }
 }
-
-

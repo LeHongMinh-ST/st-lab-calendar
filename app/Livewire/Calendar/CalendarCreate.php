@@ -5,7 +5,6 @@ namespace App\Livewire\Calendar;
 use App\Common\Constants;
 use App\Enums\ActivityType;
 use App\Enums\CalendarLoop;
-use App\Enums\Status;
 use App\Models\Calendar;
 use App\Models\Team;
 use App\Services\CalendarService;
@@ -24,7 +23,6 @@ use Livewire\Component;
 
 class CalendarCreate extends Component
 {
-
     #[Validate('required', as: 'tiêu đề')]
     public string $title = '';
 
@@ -63,7 +61,6 @@ class CalendarCreate extends Component
 
     public bool $isLoading = false;
 
-
     public function mount(): void
     {
         $this->startDate = Carbon::now()->format(Constants::FORMAT_DATE);
@@ -78,45 +75,47 @@ class CalendarCreate extends Component
     {
         if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
+
             return false;
         }
 
-        if ($this->activityType == ActivityType::Seminar && !$this->seminarUser) {
+        if ($this->activityType == ActivityType::Seminar && ! $this->seminarUser) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập tên người trình bày!');
+
             return false;
 
         }
 
-        if ($this->activityType == ActivityType::Seminar && !$this->seminarContent) {
+        if ($this->activityType == ActivityType::Seminar && ! $this->seminarContent) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng nhập nội dung buổi seminar!');
+
             return false;
         }
-
 
         if ($this->startTime >= $this->endTime) {
             $this->dispatch('alert', type: 'error', message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu!');
+
             return false;
         }
 
         if ($this->startDate > $this->endDate) {
             $this->dispatch('alert', type: 'error', message: 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu!');
+
             return false;
         }
 
         return true;
     }
 
-
-    public function submit(): RedirectResponse|null
+    public function submit(): ?RedirectResponse
     {
         $this->validate();
 
-        if (!$this->isValidate()) {
+        if (! $this->isValidate()) {
             return null;
         }
 
-
-        if (!$this->isLoading) {
+        if (! $this->isLoading) {
             $this->isLoading = true;
 
             DB::beginTransaction();
@@ -142,17 +141,18 @@ class CalendarCreate extends Component
 
                 DB::commit();
                 $this->dispatch('alert', type: 'success', message: 'Tạo lịch thành công!');
-//                return redirect()->route('calendar.index');
+                //                return redirect()->route('calendar.index');
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error('Create Calendar', [
                     'method' => __METHOD__,
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
                 ]);
                 $this->dispatch('alert', type: 'error', message: 'Có lỗi xảy ra, vui lòng thử lại sau!');
             }
             $this->isLoading = false;
         }
+
         return null;
 
     }
@@ -230,7 +230,7 @@ class CalendarCreate extends Component
 
     public function handleUpdateDayOfWeek($value): void
     {
-        if (!$this->isSelectDayOfWeek($value)) {
+        if (! $this->isSelectDayOfWeek($value)) {
             return;
         }
 
@@ -265,15 +265,16 @@ class CalendarCreate extends Component
         return in_array($value, $this->dayOfWeekFromStartDateToEndDate);
     }
 
-
     #[Computed]
     public function totalTime(): string
     {
         if ($this->startTime && $this->endTime) {
             $start = new DateTime($this->startTime);
             $end = new DateTime($this->endTime);
+
             return $start->diff($end)->format('%h giờ %i phút');
         }
+
         return '';
     }
 
@@ -283,9 +284,11 @@ class CalendarCreate extends Component
         if ($this->startDate && $this->endDate) {
             if ($this->startDate == $this->endDate) {
                 $startTime = Carbon::parse($this->startTime);
+
                 return $startTime->copy()->subMinutes(30)->format(Constants::FORMAT_TIME);
             }
         }
+
         return '';
     }
 
@@ -306,6 +309,7 @@ class CalendarCreate extends Component
     {
         $startDate = Carbon::parse($this->startDate);
         $endDate = Carbon::parse($this->endDate);
+
         return $startDate->diffInWeeks($endDate) + 1;
     }
 

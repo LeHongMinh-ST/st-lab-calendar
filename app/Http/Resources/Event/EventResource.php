@@ -31,7 +31,7 @@ class EventResource extends JsonResource
             'status' => $this->status,
             'user' => new UserResource($this->user),
             'team' => new TeamResource($this->team),
-            'start' =>$startTime,
+            'start' => $startTime,
             'end' => $endTime,
         ];
     }

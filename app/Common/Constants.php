@@ -12,7 +12,6 @@ class Constants
 
     const FORMAT_DATE_TIME_API = 'Y-m-d\TH:i:s';
 
-
     const TEAM_IMAGE_DEFAULT = 'assets/images/team.png';
 
     const PER_PAGE_ADMIN = 10;

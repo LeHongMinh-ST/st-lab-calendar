@@ -21,7 +21,8 @@ class AuthLoginRequest extends FormRequest
      *
      * @return array<string, ValidationRule|array|string>
      */
-    #[ArrayShape(['username' => "string", 'password' => "string"])] public function rules(): array
+    #[ArrayShape(['username' => 'string', 'password' => 'string'])]
+    public function rules(): array
     {
         return [
             'username' => 'required',

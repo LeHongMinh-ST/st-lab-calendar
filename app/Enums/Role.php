@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Enums;
+
 enum Role: string
 {
     case Admin = 'admin';
@@ -13,8 +14,6 @@ enum Role: string
 
     /**
      * all
-     *
-     * @return array
      */
     public static function displayAll(): array
     {
@@ -22,6 +21,7 @@ enum Role: string
         foreach (self::cases() as $value) {
             $display[$value->value] = self::getName($value);
         }
+
         return $display;
     }
 
@@ -32,6 +32,4 @@ enum Role: string
             self::User => trans('user.role.user'),
         };
     }
-
 }
-

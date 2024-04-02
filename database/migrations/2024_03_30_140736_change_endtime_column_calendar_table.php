@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('calendars', function (Blueprint $table) {
             if (Schema::hasColumn('calendars', 'ent_time')) {
-               $table->renameColumn('ent_time', 'end_time');
+                $table->renameColumn('ent_time', 'end_time');
             }
         });
     }

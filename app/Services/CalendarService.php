@@ -11,32 +11,39 @@ use Carbon\Carbon;
 class CalendarService
 {
     private Calendar $calendar;
+
     private ActivityType $activityType = ActivityType::Report;
+
     private string $seminarUser = '';
+
     private string $content = '';
 
     public static function forCalendar(Calendar $calendar): self
     {
         $instance = new self();
         $instance->calendar = $calendar;
+
         return $instance;
     }
 
     public function withActivityType(ActivityType $activityType): self
     {
         $this->activityType = $activityType;
+
         return $this;
     }
 
     public function withSeminarUser(string $seminarUser): self
     {
         $this->seminarUser = $seminarUser;
+
         return $this;
     }
 
     public function withContent(string $content): self
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -48,7 +55,7 @@ class CalendarService
             case CalendarLoop::None:
                 $this->createEvent();
                 break;
-            case CalendarLoop::Daily :
+            case CalendarLoop::Daily:
             case CalendarLoop::Weekly:
                 $this->createRecurringEvent();
                 break;
@@ -82,7 +89,7 @@ class CalendarService
             'end_time' => $this->calendar->end_time,
             'type' => $this->activityType->value,
             'owner' => $this->seminarUser,
-            'content' => $this->content ?? ''
+            'content' => $this->content ?? '',
         ]);
 
         $this->calendar->events()->create([
@@ -92,10 +99,9 @@ class CalendarService
             'day' => $dayTimestamp->timestamp,
             'activity_id' => $activity->id,
             'team_id' => $this->calendar->team_id,
-            'content' => $this->content ?? ''
+            'content' => $this->content ?? '',
         ]);
     }
-
 
     private function isRecurringDay(Carbon $date): bool
     {

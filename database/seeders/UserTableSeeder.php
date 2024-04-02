@@ -21,7 +21,8 @@ class UserTableSeeder extends Seeder
         ]);
     }
 
-    private function checkIssetBeforeCreate($data) {
+    private function checkIssetBeforeCreate($data)
+    {
         $admin = User::where('email', $data['email'])->first();
         if (empty($admin)) {
             User::create($data);

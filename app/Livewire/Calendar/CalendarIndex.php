@@ -16,6 +16,7 @@ class CalendarIndex extends Component
     use WithPagination;
 
     public string|int|null $calendarId = null;
+
     public string $search = '';
 
     protected $listeners = [
@@ -37,6 +38,7 @@ class CalendarIndex extends Component
             ->where('status', '!=', Status::Draft->value)
             ->search($this->search)
             ->paginate($perPage);
+
         return view('livewire.calendar.calendar-index')->with([
             'calendars' => $calendars,
         ]);
@@ -60,7 +62,7 @@ class CalendarIndex extends Component
         } catch (\Exception $e) {
             Log::error('Error delete calendar', [
                 'method' => __METHOD__,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
             $this->dispatch('alert', type: 'error', message: 'Xóa thất bại!');
         }

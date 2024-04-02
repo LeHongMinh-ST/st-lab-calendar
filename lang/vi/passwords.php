@@ -17,6 +17,6 @@ return [
     'sent' => 'Kiểm tra email để lấy liên kết đặt lại mật khẩu của bạn!',
     'throttled' => 'Vui lòng đợi trước khi thử lại.',
     'token' => 'Mã thông báo đặt lại mật khẩu này không hợp lệ.',
-    'user' => "Địa chỉ email không chính xác.",
+    'user' => 'Địa chỉ email không chính xác.',
 
 ];

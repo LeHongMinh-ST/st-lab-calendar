@@ -38,7 +38,7 @@ class Calendar extends Model
 
     public function scopeSearch($query, $search)
     {
-        return $query->where('title', 'like', '%' . $search . '%');
+        return $query->where('title', 'like', '%'.$search.'%');
     }
 
     public function getStatusTextAttribute(): string

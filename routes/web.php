@@ -50,6 +50,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     });
 
     Route::get('coming-soon', function () {
-       return view('coming-soon');
+        return view('coming-soon');
     })->name('admin.coming-soon');
 });

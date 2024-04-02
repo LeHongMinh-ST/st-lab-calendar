@@ -32,6 +32,6 @@ class Team extends Model
 
     public function getThumbnailAttribute($value): string
     {
-        return $value ? asset('storage/' . $value) : asset(Constants::TEAM_IMAGE_DEFAULT);
+        return $value ? asset('storage/'.$value) : asset(Constants::TEAM_IMAGE_DEFAULT);
     }
 }

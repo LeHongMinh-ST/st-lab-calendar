@@ -17,9 +17,10 @@ trait EnumOptions
             }
             $options[] = [
                 'value' => $case->value,
-                'label' => Str::title($label)
+                'label' => Str::title($label),
             ];
         }
+
         return $options;
     }
 }

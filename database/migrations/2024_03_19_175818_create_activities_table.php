@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('content')->nullable();
-            $table->string('type')->nullable();;
+            $table->string('type')->nullable();
             $table->unsignedInteger('user_id')->nullable()->index();
             $table->dateTime('start_time')->nullable();
             $table->dateTime('end_time')->nullable();
