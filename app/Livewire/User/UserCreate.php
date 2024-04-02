@@ -58,6 +58,7 @@ class UserCreate extends Component
                     if ( ! preg_match('/^[0-9]{10}$/', $value)) {
                         return $fail('số điện thoại chưa đúng định dạng ');
                     }
+                    return true;
                 },
             ],
             'password' => [
