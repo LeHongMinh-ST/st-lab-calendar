@@ -5,6 +5,11 @@ namespace App\Livewire\User;
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -62,7 +67,7 @@ class UserCreate extends Component
         ];
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|Application|Factory
     {
         return view('livewire.user.user-create')->with([
             'roles' => Role::displayAll(),
@@ -70,7 +75,7 @@ class UserCreate extends Component
         ]);
     }
 
-    public function submit()
+    public function submit(): ?RedirectResponse
     {
         $this->validate();
 
@@ -89,10 +94,11 @@ class UserCreate extends Component
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             $this->dispatch('alert', type: 'error', message: 'Tạo mới thất bại!');
-            \Log::error('Error create user', [
+            Log::error('Error create user', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
             ]);
         }
+        return null;
     }
 }

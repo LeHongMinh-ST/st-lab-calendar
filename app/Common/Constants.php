@@ -14,4 +14,6 @@ class Constants
 
 
     const TEAM_IMAGE_DEFAULT = 'assets/images/team.png';
+
+    const PER_PAGE_ADMIN = 10;
 }

@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Enums\ActivityType;
 use App\Models\Activity;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function activities()
+    public function activities(): View|Application|Factory
     {
 
-        $serminars = Activity::where('type', ActivityType::Seminar)->get();
+        $seminars = Activity::where('type', ActivityType::Seminar)->get();
 
-        return view('activities');
+        return view('activities', compact('seminars'));
     }
 }

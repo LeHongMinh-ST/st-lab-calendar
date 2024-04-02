@@ -2,16 +2,22 @@
 
 namespace App\Livewire\User;
 
+use App\Common\Constants;
 use App\Enums\Role;
 use App\Enums\UserStatus;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class UserIndex extends Component
 {
     use WithPagination;
-    public mixed $userId = null;
+
+    public string|int|null $userId = null;
     public string $search = '';
     public string $role = '';
     public string $status = '';
@@ -26,15 +32,13 @@ class UserIndex extends Component
         $this->dispatch('openDeleteModal');
     }
 
-    public function render()
+    public function render(): View|Application|Factory
     {
-        $perPage = config('constants.per_page_admin', 2);
-
         $users = User::query()
             ->search($this->search)
             ->filterRole($this->role)
             ->filterStatus($this->status)
-            ->paginate($perPage);
+            ->paginate(Constants::PER_PAGE_ADMIN);
         return view('livewire.user.user-index')->with([
             'users' => $users,
             'roles' => Role::displayAll(),
@@ -42,7 +46,7 @@ class UserIndex extends Component
         ]);
     }
 
-    public function destroy()
+    public function destroy(): void
     {
         try {
             if (auth()->user()->id == $this->userId) {
@@ -52,7 +56,7 @@ class UserIndex extends Component
             User::destroy($this->userId);
             $this->dispatch('alert', type: 'success', message: 'Xóa thành công!');
         } catch (\Exception $e) {
-            \Log::error('Error delete user', [
+            Log::error('Error delete user', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
             ]);

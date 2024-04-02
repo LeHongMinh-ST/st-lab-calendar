@@ -4,13 +4,18 @@ namespace App\Livewire\Calendar;
 
 use App\Enums\Status;
 use App\Models\Calendar;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class CalendarIndex extends Component
 {
     use WithPagination;
-    public mixed $calendarId = null;
+
+    public string|int|null $calendarId = null;
     public string $search = '';
 
     protected $listeners = [
@@ -23,7 +28,7 @@ class CalendarIndex extends Component
         $this->dispatch('openDeleteModal');
     }
 
-    public function render()
+    public function render(): View|Application|Factory
     {
         $perPage = config('constants.per_page_admin', 10);
 
@@ -53,7 +58,7 @@ class CalendarIndex extends Component
             }
             $this->dispatch('alert', type: 'success', message: 'Xóa thành công!');
         } catch (\Exception $e) {
-            \Log::error('Error delete calendar', [
+            Log::error('Error delete calendar', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
             ]);

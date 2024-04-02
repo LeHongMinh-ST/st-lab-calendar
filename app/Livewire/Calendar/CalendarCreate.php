@@ -74,7 +74,7 @@ class CalendarCreate extends Component
         $this->teamId = $this->userTeams->first()?->id ?? 0;
     }
 
-    private function isValidate():bool
+    private function isValidate(): bool
     {
         if ($this->loop == CalendarLoop::Weekly && count($this->dayOfWeek) == 0) {
             $this->dispatch('alert', type: 'error', message: 'Vui lòng chọn ít nhất một ngày trong tuần!');
@@ -297,7 +297,7 @@ class CalendarCreate extends Component
     }
 
     #[Computed]
-    public function showEndDate()
+    public function showEndDate(): bool
     {
         return $this->loop !== CalendarLoop::None;
     }
@@ -311,7 +311,7 @@ class CalendarCreate extends Component
     }
 
     #[Computed]
-    public function showLoop()
+    public function showLoop(): bool
     {
         return $this->activityType !== ActivityType::Seminar;
     }
