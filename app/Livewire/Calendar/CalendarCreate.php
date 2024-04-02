@@ -139,8 +139,7 @@ class CalendarCreate extends Component
                     ->withSeminarUser($this->seminarUser)
                     ->withContent($this->seminarContent)
                     ->createCalendarEvent();
-
-                // Your code here
+                
                 DB::commit();
                 $this->dispatch('alert', type: 'success', message: 'Tạo lịch thành công!');
 //                return redirect()->route('calendar.index');
