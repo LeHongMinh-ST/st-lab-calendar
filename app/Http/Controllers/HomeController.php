@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\ActivityType;
-use App\Models\Activity;
-use App\Models\Event;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
