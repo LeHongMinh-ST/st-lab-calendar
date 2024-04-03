@@ -16,7 +16,7 @@ class DateTimeStamp implements CastsAttributes
         return Carbon::createFromTimestamp($value)->format(Constants::FORMAT_DATE);
     }
 
-    public function set(Model $model, string $key, mixed $value, array $attributes): string
+    public function set(Model $model, string $key, mixed $value, array $attributes): int
     {
         return Carbon::createFromFormat(Constants::FORMAT_DATE, $value)->timestamp;
     }

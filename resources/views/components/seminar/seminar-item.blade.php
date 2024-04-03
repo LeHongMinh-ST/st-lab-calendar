@@ -1,18 +1,19 @@
 <div class="seminar-item">
     <div class="date_stamp">
         <div class="date_stamp_top">
-            <div class="weekday">Thứ Sáu</div>
-            <div class="event_date">05</div>
+            <div class="weekday">{{ $dayOfWeek }}</div>
+            <div class="event_date">{{ $date }}</div>
         </div>
-        <p class="date_time_bottom">01/2024</p>
+        <p class="date_time_bottom">{{ $monthYear }}</p>
     </div>
     <div class="seminar_item_right">
-        <div class="article-title"><a href="">Multiagent Learning under Strategic Behaviours Through the Lens of Optimisation</a> <span class="badge bg-danger">Sắp diễn ra</span></div>
+        <div class="article-title"><a href="">{{ $event?->activity?->title }}</a> @if($new) <span class="badge bg-danger">Sắp diễn ra</span> @endif
+        </div>
         <div class="seminar_info">
-            <div><i>Bắt đầu:</i> 16h00</div>
-            <div><i>Địa điểm:</i> Phòng Lab 105 <a href="">(Xem chi tiết)</a></div>
-            <div><i>Nhóm:</i> ST Team</div>
-            <div><i>Người thuyết trình:</i> Lê Hồng Minh</div>
+            <div><i>Bắt đầu:</i> {{ $time }}</div>
+            <div><i>Địa điểm:</i> Phòng Lab 105</div>
+            <div><i>Nhóm:</i> {{$event?->team?->name}}</div>
+            <div><i>Người thuyết trình:</i> {{$event?->activity?->owner}}</div>
         </div>
     </div>
 </div>

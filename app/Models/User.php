@@ -112,7 +112,7 @@ class User extends Authenticatable
     public function getRoleTextAttribute()
     {
         if ($this->is_admin) {
-            return ' <span class="badge bg-info bg-opacity-10 text-info">Siêu quản trị</span>';
+            return '<span class="badge bg-info bg-opacity-10 text-info">Siêu quản trị</span>';
         }
 
         return '<span class="badge bg-info bg-opacity-10 text-info">' . $this->role?->name() . '</span>';

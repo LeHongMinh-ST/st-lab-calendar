@@ -87,7 +87,6 @@ class CalendarCreate extends Component
 
             DB::beginTransaction();
             try {
-
                 $calendar = new Calendar();
                 $calendar->title = $this->title;
                 $calendar->start_time = $this->startTime;
@@ -97,7 +96,6 @@ class CalendarCreate extends Component
                 $calendar->loop = $this->loop;
                 $calendar->date_of_week = $this->dayOfWeek;
                 $calendar->team_id = $this->teamId;
-
                 $calendar->save();
 
                 CalendarService::forCalendar($calendar)

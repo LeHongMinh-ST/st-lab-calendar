@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Common\Constants;
 use App\Enums\ActivityType;
 use App\Enums\CalendarLoop;
 use App\Models\Activity;
@@ -98,7 +99,7 @@ class CalendarService
             'title' => $this->calendar->title,
             'start_time' => $this->calendar->start_time,
             'end_time' => $this->calendar->end_time,
-            'day' => $dayTimestamp->timestamp,
+            'day' => $dayTimestamp->format(Constants::FORMAT_DATE),
             'activity_id' => $activity->id,
             'team_id' => $this->calendar->team_id,
             'content' => $this->content ?? '',

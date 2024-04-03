@@ -15,8 +15,10 @@ class SeminarSection extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public Collection|array $events
-    ) {
+        public readonly Collection|array $events,
+        public readonly bool             $new = false
+    )
+    {
 
     }
 

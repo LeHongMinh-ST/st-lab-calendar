@@ -5,19 +5,41 @@ declare(strict_types=1);
 namespace App\View\Components\Seminar;
 
 use App\Models\Event;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class SeminarItem extends Component
 {
+
+    public string $dayOfWeek;
+    public string $date;
+    public string $monthYear;
+    public string $time;
+
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public Event $event
-    ) {
+        public readonly Event $event,
+        public readonly bool  $new = false
+    )
+    {
+        /*
+         * @var Carbon $dateCarbon
+         */
+        $dateCarbon = Carbon::parse($this->event->date);
 
+        /*
+         * @var Carbon $timeCarbon
+         */
+        $timeCarbon = Carbon::parse($this->event->start_time);
+
+        $this->dayOfWeek = $dateCarbon->dayName;
+        $this->date = $dateCarbon->format('d');
+        $this->monthYear = $dateCarbon->format('m/Y');
+        $this->time = $timeCarbon->format('H\hi');
     }
 
     /**
