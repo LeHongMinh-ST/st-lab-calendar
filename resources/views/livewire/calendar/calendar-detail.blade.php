@@ -2,22 +2,17 @@
     <div class="col-md-9 col-12">
         <div class="card">
             <div class="card card-body mb-0">
-                <h4>{{$calendar?->title}}</h4>
-                <div class="border rounded p-3">
-                    <dl class="mb-0">
-                        <p><b class="px-2">Nhóm phụ trách: </b>{{$calendar?->team->name}}</p>
-                        <p><b class="px-2">Ngày bắt đầu: </b>{{$calendar?->start_day}}</p>
-                        <p><b class="px-2">Ngày kết thúc: </b>{{$calendar?->end_day}}</p>
-                        <p><b class="px-2">Thời gian: </b>{{$calendar?->start_time}} - {{$calendar?->end_time}}</p>
-                        <p><b class="px-2">Trạng thái: </b>{!!$calendar?->statusText!!}</p>
-                    </dl>
-                </div>
+                <h4><span class="px-2">Tiêu đề:</span> {{$calendar?->title}}</h4>
+                <p><b class="px-2">Nhóm: </b>{{$calendar?->team->name}}</p>
+                <p><b class="px-2">Ngày bắt đầu: </b>{{$calendar?->start_day}} -<b class="px-2">Ngày kết thúc: </b>{{$calendar?->end_day}}</p>
+                <p><b class="px-2">Thời gian: </b>{{$calendar?->start_time}} - {{$calendar?->end_time}}</p>
+                <p><b class="px-2">Trạng thái: </b>{!!$calendar?->statusText!!}</p>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between">
-                <h5>Danh sách lịch chi tiết</h5>
+                <h5>Thời khoá biểu</h5>
             </div>
             <div class="table-responsive-md">
                 <table class="table fs-table ">
@@ -36,10 +31,10 @@
                         <tr>
                             <td class="w-16px">{{ $loop->index + 1 + $events->perPage() * ($events->currentPage() - 1)   }}</td>
                             <td class="single-line-text">{{ $event->title }}</td>
-                            <td>{{ $event->day->format('d-m-Y')}}</td>
+                            <td>{{ $event->day}}</td>
                             <td>{{ $event->start_time}}</td>
                             <td>{{ $event->end_time}}</td>
-                            <td>{{ $event->activity->title}}</td>
+                            <td>{{ $event->activity->type->description()}}</td>
                         </tr>
                     @empty
                         <tr>
