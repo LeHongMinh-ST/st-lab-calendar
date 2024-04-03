@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body">
-              <x-seminar-section></x-seminar-section>
+              <x-seminar-section :events="$seminars"></x-seminar-section>
             </div>
         </div>
         <!-- /basic view -->
