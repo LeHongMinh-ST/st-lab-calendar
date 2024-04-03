@@ -28,8 +28,6 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'start_time' => TimeTimeStamp::class,
-        'end_time' => TimeTimeStamp::class,
         'day' => DateTimeStamp::class,
     ];
 
