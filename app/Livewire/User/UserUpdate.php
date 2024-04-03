@@ -11,9 +11,11 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class UserUpdate extends Component
 {
@@ -96,7 +98,7 @@ class UserUpdate extends Component
         ]);
     }
 
-    public function update()
+    public function update(): RedirectResponse|Redirector|null
     {
         $this->validate();
         $payload = $this->getAttributeNotEmpty();
@@ -113,6 +115,7 @@ class UserUpdate extends Component
             ]);
             $this->dispatch('alert', type: 'error', message: 'Cập nhật thất bại!');
         }
+        return null;
     }
 
     private function getAttributeNotEmpty(): array

@@ -13,7 +13,6 @@ use Illuminate\View\Component;
 
 class SeminarItem extends Component
 {
-
     public string $dayOfWeek;
     public string $date;
     public string $monthYear;
@@ -25,8 +24,7 @@ class SeminarItem extends Component
     public function __construct(
         public readonly Event $event,
         public readonly bool  $new = false
-    )
-    {
+    ) {
         /*
          * @var Carbon $dateCarbon
          */

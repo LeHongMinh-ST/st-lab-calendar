@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class UserCreate extends Component
 {
@@ -79,7 +80,7 @@ class UserCreate extends Component
         ]);
     }
 
-    public function submit(): ?RedirectResponse
+    public function submit(): RedirectResponse|Redirector|null
     {
         $this->validate();
 

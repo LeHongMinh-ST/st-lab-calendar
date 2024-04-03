@@ -17,8 +17,7 @@ class SeminarSection extends Component
     public function __construct(
         public readonly Collection|array $events,
         public readonly bool             $new = false
-    )
-    {
+    ) {
 
     }
 
