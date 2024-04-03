@@ -25,6 +25,7 @@ class HomeController extends Controller
                 $query->where('type', ActivityType::Seminar);
             })
             ->with(['user', 'team', 'activity'])
+            ->orderBy('day')
             ->get();
 
         return view('activities', compact('seminars'));

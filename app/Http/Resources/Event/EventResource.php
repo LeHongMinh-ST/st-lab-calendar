@@ -20,16 +20,14 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $day = Carbon::createFromTimestamp($this->day)->format(Constants::FORMAT_DATE);
-        $startTime = "{$day} {$this->start_time}";
-        $endTime = "{$day} {$this->end_time}";
+        $startTime = "{$this->day} {$this->start_time}";
+        $endTime = "{$this->day} {$this->end_time}";
         $startTime = Carbon::parse($startTime)->format(Constants::FORMAT_DATE_TIME_API);
         $endTime = Carbon::parse($endTime)->format(Constants::FORMAT_DATE_TIME_API);
-
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'day' => $day,
+            'day' => $this->day,
             'status' => $this->status,
             'user' => new UserResource($this->user),
             'team' => new TeamResource($this->team),

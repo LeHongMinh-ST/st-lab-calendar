@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components\Seminar;
 
+use App\Common\Constants;
 use App\Models\Event;
 use Carbon\Carbon;
 use Closure;
@@ -29,7 +30,7 @@ class SeminarItem extends Component
         /*
          * @var Carbon $dateCarbon
          */
-        $dateCarbon = Carbon::parse($this->event->date);
+        $dateCarbon = Carbon::createFromFormat(Constants::FORMAT_DATE, $this->event->day);
 
         /*
          * @var Carbon $timeCarbon

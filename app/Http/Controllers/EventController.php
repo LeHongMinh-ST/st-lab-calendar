@@ -18,7 +18,6 @@ class EventController extends Controller
         $now = Carbon::now();
         $startDay = $request->input('start', $now->startOfWeek()->format(Constants::FORMAT_DATE));
         $endDay = $request->input('end', $now->endOfWeek()->format(Constants::FORMAT_DATE));
-
         $startCarbon = Carbon::parse($startDay)->timestamp;
         $endCarbon = Carbon::parse($endDay)->timestamp;
 
