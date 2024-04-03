@@ -6,16 +6,19 @@ namespace App\Http\Controllers;
 
 use App\Enums\ActivityType;
 use App\Models\Activity;
+use App\Models\Event;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
     public function activities(): View|Application|Factory
     {
+        $now = Carbon::now();
 
-        $seminars = Activity::where('type', ActivityType::Seminar)->get();
+        $endDate = Carbon::now()->addWeeks(2);
 
         return view('activities', compact('seminars'));
     }

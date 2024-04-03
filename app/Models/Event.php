@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Casts\DateTimeStamp;
+use App\Casts\TimeTimeStamp;
 use App\Enums\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,9 +28,9 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'start_day' => DateTimeStamp::class,
-        'end_day' => DateTimeStamp::class,
-        'day' => 'date',
+        'start_time' => TimeTimeStamp::class,
+        'end_time' => TimeTimeStamp::class,
+        'day' => DateTimeStamp::class,
     ];
 
     public function user(): BelongsTo
