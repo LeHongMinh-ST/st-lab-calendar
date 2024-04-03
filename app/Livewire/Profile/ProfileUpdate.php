@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Profile;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -52,7 +55,7 @@ class ProfileUpdate extends Component
             'phone_number' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match("/^[0-9]{10}$/", $value)) {
+                    if ( ! preg_match("/^[0-9]{10}$/", $value)) {
                         return $fail('Số điện thoại chưa đúng định dạng ');
                     }
                 }
@@ -84,7 +87,7 @@ class ProfileUpdate extends Component
         try {
             User::where('id', $this->userId)->update($payload);
             $this->dispatch('alert', type: 'success', message: 'Cập nhật thành công!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error update user', [
                 'method' => __METHOD__,
                 'message' => $e->getMessage()
@@ -93,7 +96,8 @@ class ProfileUpdate extends Component
         }
     }
 
-    public function updatePassword(): void {
+    public function updatePassword(): void
+    {
         $this->validate([
             'old_password' => 'required',
             'new_password' => 'required|min:6',

@@ -32,13 +32,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function (): void {
     Route::get('/', fn () => redirect()->route('admin.dashboard'));
     Route::get('/dashboard', fn () => view('pages.dashboard'))->name('admin.dashboard');
 
-    Route::prefix('users')->group(function () {
+    Route::prefix('users')->group(function (): void {
         Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::get('/me', [UserController::class, 'updateProfile'])->name('admin.profile.edit');
     });
-//    Route::resource('/users', UserController::class);
+    //    Route::resource('/users', UserController::class);
 
     Route::prefix('calendar')->group(function (): void {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
