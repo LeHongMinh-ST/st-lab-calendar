@@ -36,4 +36,9 @@ class UserController extends Controller
             'id' => $id,
         ]);
     }
+
+    public function updateProfile(): View|Application|Factory
+    {
+        return view('pages.profile.update');
+    }
 }
