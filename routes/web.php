@@ -38,10 +38,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function (): void {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::get('/me', [UserController::class, 'updateProfile'])->name('admin.profile.edit');
     });
-    //    Route::resource('/users', UserController::class);
 
     Route::prefix('calendar')->group(function (): void {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
+        Route::get('/approve', [CalendarController::class, 'getListApprove'])->name('admin.calendar.approve-list');
+        Route::get('/{id}/approve', [CalendarController::class, 'showCalendarApprove'])->name('admin.calendar.approve');
         Route::get('/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
         Route::get('/{id}/edit', [CalendarController::class, 'edit'])->name('admin.calendar.edit');
         Route::get('/{id}', [CalendarController::class, 'show'])->name('admin.calendar.show');
