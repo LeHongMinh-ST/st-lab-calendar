@@ -31,18 +31,87 @@
         <div class="sidebar-section">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
                 <li class="nav-item">
-                    <a href=""
-                       class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a href="{{route('admin.coming-soon')}}"
+                       class="nav-link">
                         <i class="ph-house"></i>
-                        <span>Bảng điều khiển</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
-                <!-- Chung -->
                 <li class="nav-item-header pt-0">
-                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Quản lý chung</div>
+                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Lịch - thời khoá biểu</div>
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.calendar.create')}}"
+                       class="nav-link {{ request()->routeIs('admin.calendar.create') ? 'active' : '' }}">
+                        <i class="ph-calendar-plus"></i>
+                        <span>Đăng ký lịch</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.calendar.index')}}"
+                       class="nav-link {{ request()->routeIs('events') ? 'active' : '' }}">
+                        <i class="ph-calendar"></i>
+                        <span>Lịch đã đăng ký</span>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a href=""
+                       class="nav-link {{ request()->routeIs('events') ? 'active' : '' }}">
+                        <i class="ph-calendar-check"></i>
+                        <span>Duyệt lịch đăng ký</span>
+                    </a>
+                </li>
+
+                <li class="nav-item-header pt-0">
+                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Nhóm - Hoạt động</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li class="nav-item">
+                    <a href=""
+                       class="nav-link">
+                        <i class="ph-users-three"></i>
+                        <span>Nhóm phụ trách</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.coming-soon')}}"
+                       class="nav-link">
+                        <i class="ph-note-blank"></i>
+                        <span>Nhật ký - Phản ánh</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.coming-soon')}}"
+                       class="nav-link">
+                        <i class="ph-activity"></i>
+                        <span>Hoạt động nhóm</span>
+                    </a>
+                </li>
+                <li class="nav-item-header pt-0">
+                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Báo cáo - Thống kê</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.coming-soon')}}"
+                       class="nav-link">
+                        <i class="ph-chart-bar"></i>
+                        <span>Báo cáo - Thống kê</span>
+                    </a>
+                </li>
+
+                <li class="nav-item-header pt-0">
+                    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Quản lý hệ thống</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.users.index')}}"
+                       class="nav-link">
+                        <i class="ph-user"></i>
+                        <span>Người dùng</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- /main navigation -->

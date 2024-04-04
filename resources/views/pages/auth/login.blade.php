@@ -1,8 +1,11 @@
 <x-auth-layout>
+    <x-slot name="custom_js">
+        @vite(['resources/js/auth/login.js'])
+    </x-slot>
     <div class="content login-wrapper">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row login-row">
                     <div class="col-xl-6">
                         <div class="login-image-wrapper">
                             <img class="login-image" src="{{asset('assets/images/login.png')}}" alt="login">
@@ -16,7 +19,8 @@
 
                     </div>
                     <div class="col-xl-6 ">
-                        <form action="" class="login-form">
+                        <form action="{{route('handleLogin')}}" class="login-form" method="POST">
+                            @csrf
                             <div class="text-center mb-3">
                                 <div class="d-inline-flex align-items-center justify-content-center mb-4 mt-2">
                                     <img src="{{asset('assets/images/FITA.png')}}" class="h-64px" alt="">
@@ -29,33 +33,42 @@
                             <div class="mb-3">
                                 <label class="form-label">Tài khoản/Email</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="text" class="form-control" placeholder="john@st.com">
+                                    <input type="text" class="form-control" placeholder="Tên tài khoản" name="username" id="username" value="{{ old('username') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-user-circle text-muted"></i>
                                     </div>
+                                    @error('username')
+                                    <label id="error-username" class="validation-error-label" for="username">{{ $message }}</label>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Mật khẩu</label>
                                 <div class="form-control-feedback form-control-feedback-start">
-                                    <input type="password" class="form-control" placeholder="•••••••••••">
+                                    <input type="password" class="form-control" placeholder="•••••••••••" id="password" name="password" value="{{ old('password') }}"/>
                                     <div class="form-control-feedback-icon">
                                         <i class="ph-lock text-muted"></i>
                                     </div>
+                                    @error('password')
+                                    <label id="error-password" class="validation-error-label" for="password">{{ $message }}</label>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
                                 <label class="form-check">
-                                    <input type="checkbox" name="remember" class="form-check-input" checked="">
+                                    <input type="checkbox" name="remember" class="form-check-input" value="1">
                                     <span class="form-check-label">Nhớ mật khẩu</span>
                                 </label>
 
-                                <a href="login_password_recover.html" class="ms-auto">Quên mật khẩu</a>
+                                <a href="#" class="ms-auto">Quên mật khẩu</a>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                             </div>
+                            @error('message')
+                            <label id="message-error" class="validation-error-label w-100 text-center" for="basic">{{ $message }}</label>
+                            @enderror
 {{--                            <div class="text-center text-muted content-divider mb-3">--}}
 {{--                                <span class="px-2">Hoặc đăng nhập với</span>--}}
 {{--                            </div>--}}
