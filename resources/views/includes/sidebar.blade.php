@@ -50,15 +50,15 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{route('admin.calendar.index')}}"
-                       class="nav-link {{ request()->routeIs('events') ? 'active' : '' }}">
+                       class="nav-link {{ request()->routeIs('admin.calendar.index') ? 'active' : '' }}">
                         <i class="ph-calendar"></i>
                         <span>Lịch đã đăng ký</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href=""
-                       class="nav-link {{ request()->routeIs('events') ? 'active' : '' }}">
+                    <a href="{{route('admin.calendar.approve-list')}}"
+                       class="nav-link {{ request()->routeIs('admin.calendar.approve-list') ? 'active' : '' }}">
                         <i class="ph-calendar-check"></i>
                         <span>Duyệt lịch đăng ký</span>
                     </a>
@@ -107,7 +107,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{route('admin.users.index')}}"
-                       class="nav-link">
+                       class="nav-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
                         <i class="ph-user"></i>
                         <span>Người dùng</span>
                     </a>

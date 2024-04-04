@@ -56,8 +56,24 @@
                 Hành động
             </div>
             <div class="card-body d-flex align-items-center gap-1">
-                <a href="{{route('admin.calendar.index')}}" type="button" class="btn btn-warning"><i class="ph-arrow-counter-clockwise"></i> Trở lại</a>
+                <button class="btn btn-primary {{$calendar->status == \App\Enums\Status::Inactive ? '' : 'd-none'}}" @click="$wire.update"><i class="ph-floppy-disk"></i> Lưu</button>
+                <a href="{{route('admin.calendar.approve-list')}}" type="button" class="btn btn-warning"><i class="ph-arrow-counter-clockwise"></i> Trở lại</a>
+            </div>
+        </div>
+        <div class="card {{$calendar->status == \App\Enums\Status::Inactive ? '' : 'd-none'}}">
+            <div class="card-header bold">
+                <i class="ph-gear-six"></i>
+                Trạng thái lịch
+            </div>
+            <div class="card-body d-flex align-items-center gap-1">
+                <select id="selectStatus" class="form-select" wire:model.live="statusCalendar">
+                    <option value="" disabled>Chọn trạng thái ...</option>
+                    @foreach($statuses as $value => $name)
+                        <option value="{{$value}}">{{ $name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
+
 </div>

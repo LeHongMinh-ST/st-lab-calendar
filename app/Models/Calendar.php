@@ -47,7 +47,8 @@ class Calendar extends Model
     {
         return match ($this->status) {
             Status::Active => '<span class="badge bg-success bg-opacity-20 text-success">Đã duyệt</span>',
-            Status::Inactive => '<span class="badge bg-danger bg-opacity-20 text-danger">Chờ duyệt</span>',
+            Status::Inactive => '<span class="badge bg-warning bg-opacity-20 text-warning">Chờ duyệt</span>',
+            Status::Draft => '<span class="badge bg-dark bg-opacity-20 text-dark">Đã hủy</span>',
         };
     }
 
