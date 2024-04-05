@@ -17,4 +17,6 @@ class Constants
     public const TEAM_IMAGE_DEFAULT = 'assets/images/team.png';
 
     public const PER_PAGE_ADMIN = 10;
+
+    public const ROOM_NAME = 'Phòng 304 - Toà nhà C';
 }

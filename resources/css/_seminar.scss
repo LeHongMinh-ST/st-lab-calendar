@@ -9,6 +9,13 @@
             }
         }
         .seminar-list {
+            .empty-calendar {
+                text-align: center;
+                img {
+                    width: 250px;
+                }
+            }
+
             .seminar-item {
                 border-bottom: 1px solid #ccc;
                 padding-bottom: 20px;
@@ -61,5 +68,7 @@
                 }
             }
         }
+
+
     }
 }

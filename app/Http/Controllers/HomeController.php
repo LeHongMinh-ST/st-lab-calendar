@@ -28,6 +28,14 @@ class HomeController extends Controller
             ->orderBy('day')
             ->get();
 
-        return view('activities', compact('seminars'));
+        $seminarIds = $seminars->pluck('id')->toArray();
+
+        $seminarOthers = Event::where('day', '<', $now)
+            ->whereNotIn('id', $seminarIds)
+            ->with(['user', 'team', 'activity'])
+            ->orderBy('day')
+            ->get();
+
+        return view('activities', compact('seminars', 'seminarOthers'));
     }
 }
