@@ -67,7 +67,7 @@ class UserUpdate extends Component
             ],
         ];
 
-        if (auth()->user()->id != $this->userId) {
+        if (auth()->user()->id !== $this->userId) {
             $validate = array_merge($validate, [
                 'role' => 'required',
                 'status' => 'required',

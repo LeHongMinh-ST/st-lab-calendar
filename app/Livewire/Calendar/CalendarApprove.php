@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Calendar;
 
 use App\Enums\Status;
 use App\Models\Calendar;
 use App\Models\Event;
-use App\Models\User;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithPagination;
@@ -20,7 +21,7 @@ class CalendarApprove extends Component
     use WithPagination;
 
     public $calendarId;
-    public $statusCalendar="";
+    public $statusCalendar = "";
 
     private $calendar;
 
@@ -59,12 +60,12 @@ class CalendarApprove extends Component
     public function update(): RedirectResponse|Redirector|null
     {
         try {
-            if (boolval($this->statusCalendar)) {
+            if ((bool) ($this->statusCalendar)) {
                 Calendar::where('id', $this->calendarId)->update(['status' => Status::Active]);
                 session()->flash('success', 'Cập nhật thành công');
                 return redirect()->route('admin.calendar.approve-list');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->dispatch('alert', type: 'error', message: 'Cập nhật thất bại!');
         }
         return null;

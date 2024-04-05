@@ -38,7 +38,7 @@ class CalendarIndex extends Component
         $perPage = config('constants.per_page_admin', 10);
 
         $calendars = Calendar::with('team')
-            ->when(auth()->user()->role == Role::User, function ($query) {
+            ->when(Role::User === auth()->user()->role, function ($query) {
                 return $query->where('user_id', auth()->user()->id)
                     ->where('status', '!=', Status::Draft->value);
             })

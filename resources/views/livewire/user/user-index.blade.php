@@ -61,11 +61,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="8" style="text-align: center">
-                            <img src="{{ asset('assets\images\empty.png') }}" width="450px" alt="empty">
-                        </td>
-                    </tr>
+                    <x-table-empty :colspan="7"/>
                 @endforelse
                 </tbody>
             </table>

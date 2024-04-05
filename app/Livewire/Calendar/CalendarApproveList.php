@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Calendar;
 
-use App\Enums\Status;
 use App\Models\Calendar;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
