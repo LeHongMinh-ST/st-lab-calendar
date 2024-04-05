@@ -26,7 +26,7 @@
                             <option value="" @if(request()->query('year') == '') selected @endif>Tất cả</option>
                             @foreach(Constants::YEAR as $year)
                                 <option value="{{ $year }}"
-                                        @if(request()->query('year') == $year) selected @endif>{{ $year }}</option>
+                                        @if(request()->query('year') == $year) selected @endif>Năm {{ $year }}</option>
                             @endforeach
                         </select>
                     </div>
