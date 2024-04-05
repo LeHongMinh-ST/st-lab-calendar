@@ -67,7 +67,7 @@ class UserUpdate extends Component
             ],
         ];
 
-        if (auth()->user()->id !== $this->userId) {
+        if (auth()->user()->id != $this->userId) {
             $validate = array_merge($validate, [
                 'role' => 'required',
                 'status' => 'required',
@@ -106,7 +106,6 @@ class UserUpdate extends Component
         try {
             User::where('id', $this->userId)->update($payload);
             session()->flash('success', 'Cập nhật thành công');
-
             return redirect()->route('admin.users.index');
         } catch (Exception $e) {
             Log::error('Error update user', [

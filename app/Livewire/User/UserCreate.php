@@ -35,10 +35,10 @@ class UserCreate extends Component
     public string $password = '';
 
     #[Validate(as: 'vai trò')]
-    public string $role = '';
+    public string $role = 'user';
 
     #[Validate(as: 'trạng thái')]
-    public string $status = '';
+    public string $status = 'active';
 
     public function rules(): array
     {

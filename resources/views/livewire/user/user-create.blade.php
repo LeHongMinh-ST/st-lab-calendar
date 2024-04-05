@@ -74,7 +74,6 @@
                             Vai trò <span class="required">*</span>
                         </label>
                         <select id="selectRole" class="form-control select" wire:model.live="role">
-                            <option value="" disabled>Chọn vai trò ...</option>
                             @foreach($roles as $value => $name)
                                 <option value="{{$value}}">{{ $name }}</option>
                             @endforeach
@@ -89,7 +88,6 @@
                             Trạng thái <span class="required">*</span>
                         </label>
                         <select id="selectStatus" class="form-select" wire:model.live="status">
-                            <option value="" disabled>Chọn trạng thái ...</option>
                             @foreach($statuses as $value => $name)
                                 <option value="{{$value}}">{{ $name }}</option>
                             @endforeach

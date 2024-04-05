@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Calendar;
 
+use App\Enums\Role;
 use App\Enums\Status;
 use App\Models\Calendar;
 use Exception;
@@ -37,8 +38,11 @@ class CalendarIndex extends Component
         $perPage = config('constants.per_page_admin', 10);
 
         $calendars = Calendar::with('team')
-            ->where('user_id', auth()->user()->id)
-            ->where('status', '!=', Status::Draft->value)
+            ->when(auth()->user()->role == Role::User, function ($query) {
+                return $query->where('user_id', auth()->user()->id)
+                    ->where('status', '!=', Status::Draft->value);
+            })
+            ->orderBy('created_at', 'desc')
             ->search($this->search)
             ->paginate($perPage);
 

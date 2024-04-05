@@ -16,6 +16,11 @@ class CalendarController extends Controller
         return view('pages.calendar.index');
     }
 
+    public function getListApprove(): View|Application|Factory
+    {
+        return view('pages.calendar.approve-list');
+    }
+
     public function create(): View|Application|Factory
     {
         return view('pages.calendar.create');
@@ -31,6 +36,13 @@ class CalendarController extends Controller
     public function show($id): View|Application|Factory
     {
         return view('pages.calendar.detail')->with([
+            'id' => $id,
+        ]);
+    }
+
+    public function showCalendarApprove($id): View|Application|Factory
+    {
+        return view('pages.calendar.approve')->with([
             'id' => $id,
         ]);
     }

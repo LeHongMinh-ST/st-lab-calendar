@@ -8,11 +8,6 @@
             </div>
             <div class="d-flex gap-2">
                 <div>
-                    <a href="{{route('admin.calendar.create')}}" type="button" class="btn btn-primary btn-icon px-2">
-                        <i class="ph-plus-circle px-1"></i><span>Thêm mới</span>
-                    </a>
-                </div>
-                <div>
                     <button type="button" class="btn btn-light btn-icon px-2" @click="$wire.$refresh">
                         <i class="ph-arrows-clockwise px-1"></i><span>Tải lại</span>
                     </button>
@@ -37,7 +32,7 @@
                 @forelse($calendars as $calendar)
                     <tr>
                         <td class="w-16px">{{ $loop->index + 1 + $calendars->perPage() * ($calendars->currentPage() - 1)   }}</td>
-                        <td class="single-line-text"><a href="{{route('admin.users.edit', $calendar->id)}}">{{ $calendar->title }}</a></td>
+                        <td class="single-line-text"><a href="{{route('admin.calendar.approve', $calendar->id)}}">{{ $calendar->title }}</a></td>
                         <td>{{ $calendar->team->name }}</td>
                         <td>{{ $calendar->start_day}}</td>
                         <td>{{ $calendar->end_day}}</td>
@@ -47,19 +42,14 @@
                                 <a href="#" class="text-body" data-bs-toggle="dropdown">
                                     <i class="ph-list"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="{{route('admin.users.edit', $calendar->id)}}" class="dropdown-item
-                                    {{in_array($calendar->status, [\App\Enums\Status::Active]) ? 'd-none' : ''}}">
-                                        <i class="px-1 ph-note-pencil"></i>
-                                        Chỉnh sửa
-                                    </a>
-                                    <a href="{{route('admin.calendar.show', $calendar->id)}}" class="dropdown-item">
+                                <div class="dropdown-menu dropdown-menu-end {{$calendar->status}} {{\App\Enums\Status::Inactive}}">
+                                    <a href="{{route('admin.calendar.approve', $calendar->id)}}" class="dropdown-item">
                                         <i class="px-1 ph-eye"></i>
                                         Chỉ tiết
                                     </a>
-                                    <a type="button" @click="$wire.openDeleteModal({{ $calendar->id }})" href="#" class="dropdown-item">
-                                        <i class="px-1 ph-trash"></i>
-                                        Xóa
+                                    <a type="button" @click="$wire.openApproveModal({{ $calendar->id }})" href="#" class="dropdown-item  {{$calendar->status != \App\Enums\Status::Inactive ? 'd-none' : ''}}">
+                                        <i class="px-1 ph-check-circle"></i>
+                                        Duyệt lịch
                                     </a>
                                 </div>
                             </div>
