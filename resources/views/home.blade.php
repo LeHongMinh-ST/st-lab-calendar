@@ -9,6 +9,20 @@
 
             <div class="card-body">
                 <div class="fullcalendar-basic"></div>
+                <div class="note-calendar">
+                    <div class="note-item">
+                        <div class="bullet note-work"></div>
+                        <div class="text">Làm việc - nghiên cứu</div>
+                    </div>
+                    <div class="note-item">
+                        <div class="bullet note-seminar"></div>
+                        <div class="text">Hội thảo - Seminar</div>
+                    </div>
+                    <div class="note-item">
+                        <div class="bullet note-other"></div>
+                        <div class="text">Khác</div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /basic view -->

@@ -35,4 +35,31 @@
             cursor: not-allowed;
         }
     }
+
+}
+
+.note-calendar {
+    margin-top: 10px;
+    .note-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .bullet {
+            width: 10px;
+            height: 10px;
+
+            &.note-work {
+                background: #1376bc;
+            }
+
+            &.note-seminar {
+                background: #FF9800;
+            }
+
+            &.note-other {
+                background: gray;
+            }
+        }
+    }
 }
