@@ -18,5 +18,20 @@ class Constants
 
     public const PER_PAGE_ADMIN = 10;
 
+    public const PER_PAGE = 10;
+
+    public const PER_PAGE_SEMINAR = 5;
+
     public const ROOM_NAME = 'Phòng 304 - Toà nhà C';
+
+    public const YEAR = [
+        2024,
+        2023,
+        2022,
+        2021,
+        2020,
+        2019,
+        2018,
+        2017,
+    ];
 }

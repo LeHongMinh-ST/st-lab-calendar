@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View\Components\Table;
 
 use Closure;
@@ -13,9 +15,8 @@ class TableEmpty extends Component
      */
     public function __construct(
         public readonly int $colspan = 1,
-    )
-    {
-        //
+    ) {
+
     }
 
     /**

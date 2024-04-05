@@ -25,3 +25,7 @@ window.addEventListener('alert', event => {
 
 import './fullcalendar.js'
 // import './datepicker.js'
+
+$('#filter-select-year').change(function () {
+  $('#frm-filter-seminar').submit()
+})
