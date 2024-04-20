@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -46,5 +47,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::prefix('calendar')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
         Route::get('/create', [CalendarController::class, 'create'])->name('admin.calendar.create');
+    });
+
+    Route::prefix('team')->group(function () {
+        Route::get('/', [TeamController::class, 'index'])->name('admin.team.index');
+        Route::get('/create', [TeamController::class, 'create'])->name('admin.team.create');
     });
 });

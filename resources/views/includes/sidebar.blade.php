@@ -69,7 +69,7 @@
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
                 <li class="nav-item">
-                    <a href=""
+                    <a href="{{ route('admin.team.index') }}"
                        class="nav-link">
                         <i class="ph-users-three"></i>
                         <span>Nhóm phụ trách</span>
