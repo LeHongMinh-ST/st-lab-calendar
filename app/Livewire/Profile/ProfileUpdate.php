@@ -6,11 +6,11 @@ namespace App\Livewire\Profile;
 
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Hash;
 
 class ProfileUpdate extends Component
 {
@@ -41,7 +41,7 @@ class ProfileUpdate extends Component
     #[Validate(as: 'mật khẩu nhập lại')]
     public string $retyped_password = '';
 
-    public $selectedTab = 'account'; 
+    public $selectedTab = 'account';
 
     public function rules(): array
     {
@@ -69,11 +69,6 @@ class ProfileUpdate extends Component
     }
     public function render()
     {
-        // $this->userId = auth()->id();
-        // $user = User::find($this->userId);
-        // $this->username = $user->username ?? '';
-        // $this->full_name = $user->full_name ?? '';
-        // $this->email = $user->email ?? '';
         return view('livewire.profile.profile-update');
     }
 
@@ -81,7 +76,7 @@ class ProfileUpdate extends Component
     {
         $this->userId = auth()->id();
         $user = User::find($this->userId);
-        
+
         $this->userId = auth()->id();
         $user = User::find($this->userId);
         $this->username = $user->username ?? '';
@@ -91,7 +86,7 @@ class ProfileUpdate extends Component
         $this->thumbnail = $user->thumbnail ?? '';
     }
 
-    public function changeTab($tabName):void
+    public function changeTab($tabName): void
     {
         $this->selectedTab = $tabName;
     }
@@ -114,11 +109,6 @@ class ProfileUpdate extends Component
             $payload['thumbnail'] = $thumbnailPath;
         }
 
-        // if(!empty($this->thumbnail))
-        // {
-        //     $this->thumbnail->store('livewire-tmp');
-        // }
-
         try {
             User::where('id', $this->userId)->update($payload);
             $this->dispatch('alert', type: 'success', message: 'Cập nhật thành công!');
@@ -140,10 +130,9 @@ class ProfileUpdate extends Component
         ]);
         $user = User::find($this->userId);
         try {
-            if (!Hash::check($this->old_password, $user->password)) {
+            if ( ! Hash::check($this->old_password, $user->password)) {
                 $this->dispatch('alert', type: 'error', message: 'Mật khẩu cũ chưa đúng!');
-            }
-            else{
+            } else {
                 $user->password = $this->new_password;
                 $user->save();
                 $this->dispatch('alert', type: 'success', message: 'Cập nhật thành công!');
