@@ -30,7 +30,6 @@ class User extends Authenticatable
         'phone_number',
         'email',
         'password',
-        'thumbnail',
         'status',
         'role',
         'is_admin',

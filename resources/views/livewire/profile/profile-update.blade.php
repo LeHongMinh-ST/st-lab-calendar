@@ -1,24 +1,25 @@
 <div class="card card-body">
     <ul class="nav nav-tabs mb-3" role="tablist">
         <li class="nav-item" role="presentation">
-            <a href="#js-tab1" class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">
+            <a href="#js-tab1" wire:click.prevent="changeTab('account')" class="nav-link {{ $selectedTab == 'account' ? 'active' : '' }}" data-bs-toggle="tab" aria-selected="true" role="tab">
                 Tài khoản
             </a>
         </li>
 
         <li class="nav-item" role="presentation">
-            <a href="#js-tab2" class="nav-link" data-bs-toggle="tab" aria-selected="false" tabindex="-1" role="tab">
+            <a href="#js-tab2" wire:click.prevent="changeTab('password') " class="nav-link {{ $selectedTab == 'password' ? 'active' : '' }}" data-bs-toggle="tab" aria-selected="false" tabindex="-1" role="tab">
                 Đổi mật khẩu
             </a>
         </li>
     </ul>
 
     <div class="tab-content">
+        @if ($selectedTab == 'account')
         <div class="tab-pane fade show active" id="js-tab1" role="tabpanel">
             <div class="row">
                 <div class="col-6">
                     <label class="col-form-label col-lg-3">Ảnh đại diện</label>
-                    <input wire:model.live="avatar" type="file" class="form-control" accept="image/*">
+                    <input wire:model.live="thumbnail" type="file" class="form-control" accept="image/*">
                 </div>
             </div>
             <div class="row">
@@ -80,8 +81,10 @@
                 </div>
             </div>
         </div>
+        @endif
 
-        <div class="tab-pane fade" id="js-tab2" role="tabpanel">
+        @if ($selectedTab == 'password')
+        <div class="tab-pane fade show active" id="js-tab2" role="tabpanel">
             <div class="row">
                 <div class="col-6">
                     <label for="old_password" class="col-form-label">
@@ -125,5 +128,6 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
