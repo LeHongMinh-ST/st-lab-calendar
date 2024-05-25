@@ -20,6 +20,10 @@
                 <div class="col-6">
                     <label class="col-form-label col-lg-3">Ảnh đại diện</label>
                     <input wire:model.live="thumbnail" type="file" class="form-control" accept="image/*">
+                    @error('thumbnail')
+                    <label id="error-thumbnail" class="validation-error-label text-danger"
+                               for="thumbnail">{{ $message }}</label>
+                    @enderror
                 </div>
             </div>
             <div class="row">

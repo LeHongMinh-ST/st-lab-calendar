@@ -77,13 +77,10 @@ class ProfileUpdate extends Component
         $this->userId = auth()->id();
         $user = User::find($this->userId);
 
-        $this->userId = auth()->id();
-        $user = User::find($this->userId);
         $this->username = $user->username ?? '';
         $this->full_name = $user->full_name ?? '';
         $this->email = $user->email ?? '';
         $this->phone_number = $user->phone_number ?? '';
-        $this->thumbnail = $user->thumbnail ?? '';
     }
 
     public function changeTab($tabName): void
@@ -94,12 +91,13 @@ class ProfileUpdate extends Component
     public function updateInfo(): void
     {
         $this->validate();
+        
         $thumbnailPath = null;
         if ($this->thumbnail) {
             $thumbnailPath = $this->thumbnail->store('thumbnails', 'public');
         }
+        $user = User::find($this->userId);
         $payload = [
-            'thumbnail' => $this->thumbnail->hashName(),
             'username' => $this->username,
             'full_name' => $this->full_name,
             'email' => $this->email,
@@ -107,6 +105,9 @@ class ProfileUpdate extends Component
         ];
         if ($thumbnailPath) {
             $payload['thumbnail'] = $thumbnailPath;
+        }
+        else{
+            $payload['thumbnail'] = $user->thumbnail;
         }
 
         try {
