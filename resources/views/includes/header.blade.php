@@ -36,14 +36,18 @@
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
                     <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
                         <div class="status-indicator-container">
-                            <img src="{{ Avatar::create(auth()->user()->full_name ?? auth()->user()->username)->toBase64() }}" class="w-32px h-32px rounded-pill" alt="">
-                            <span class="status-indicator bg-success"></span>
+                            @if(auth()->user()->thumbnail)
+                                <img src="{{ asset('storage/' . auth()->user()->thumbnail) }}" class="w-32px h-32px rounded-pill" alt="">
+                            @else    
+                                <img src="{{ Avatar::create(auth()->user()->full_name ?? auth()->user()->username)->toBase64() }}" class="w-32px h-32px rounded-pill" alt="">
+                            @endif
+                                <span class="status-indicator bg-success"></span>
                         </div>
                         <span class="d-none d-lg-inline-block mx-lg-2">{{auth()->user()->full_name ?? auth()->user()->username}}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="{{route("admin.coming-soon")}}" class="dropdown-item">
+                        <a href="{{route('admin.profile.edit')}}" class="dropdown-item">
                             <i class="ph-gear me-2"></i>
                             Tài khoản
                         </a>
