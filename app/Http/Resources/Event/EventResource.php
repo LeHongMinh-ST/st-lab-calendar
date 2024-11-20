@@ -14,7 +14,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventResource extends JsonResource
 {
-
     private string $eventColor = '#1376bc';
     private string $eventSeminarColor = '#FF9800';
     private string $eventOtherColor = 'gray';
@@ -45,11 +44,11 @@ class EventResource extends JsonResource
 
     private function getColor(): string
     {
-        if ($this->activity->type === ActivityType::Seminar) {
+        if (ActivityType::Seminar === $this->activity->type) {
             return $this->eventSeminarColor;
         }
 
-        if ($this->activity->type === ActivityType::Other) {
+        if (ActivityType::Other === $this->activity->type) {
             return $this->eventOtherColor;
         }
 

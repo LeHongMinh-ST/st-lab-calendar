@@ -6,15 +6,19 @@ namespace App\Livewire\Profile;
 
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ProfileUpdate extends Component
 {
+    use WithFileUploads;
+
     public mixed $userId = null;
 
-    public string $avatar = '';
+    public $thumbnail;
 
     #[Validate(as: 'tên tài khoản')]
     public string $username = '';
@@ -37,11 +41,12 @@ class ProfileUpdate extends Component
     #[Validate(as: 'mật khẩu nhập lại')]
     public string $retyped_password = '';
 
+    public $selectedTab = 'account';
 
     public function rules(): array
     {
         return [
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'username' => [
                 'required',
                 'unique:users,username,' . $this->userId . ',id'
@@ -64,25 +69,46 @@ class ProfileUpdate extends Component
     }
     public function render()
     {
+        return view('livewire.profile.profile-update');
+    }
+
+    public function mount(): void
+    {
         $this->userId = auth()->id();
         $user = User::find($this->userId);
+
         $this->username = $user->username ?? '';
         $this->full_name = $user->full_name ?? '';
         $this->email = $user->email ?? '';
         $this->phone_number = $user->phone_number ?? '';
-        return view('livewire.profile.profile-update');
+    }
+
+    public function changeTab($tabName): void
+    {
+        $this->selectedTab = $tabName;
     }
 
     public function updateInfo(): void
     {
         $this->validate();
+        
+        $thumbnailPath = null;
+        if ($this->thumbnail) {
+            $thumbnailPath = $this->thumbnail->store('thumbnails', 'public');
+        }
+        $user = User::find($this->userId);
         $payload = [
-            'avatar' => $this->avatar,
             'username' => $this->username,
             'full_name' => $this->full_name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
         ];
+        if ($thumbnailPath) {
+            $payload['thumbnail'] = $thumbnailPath;
+        }
+        else{
+            $payload['thumbnail'] = $user->thumbnail;
+        }
 
         try {
             User::where('id', $this->userId)->update($payload);
@@ -103,5 +129,22 @@ class ProfileUpdate extends Component
             'new_password' => 'required|min:6',
             'retyped_password' => 'required|same:new_password',
         ]);
+        $user = User::find($this->userId);
+        try {
+            if ( ! Hash::check($this->old_password, $user->password)) {
+                $this->dispatch('alert', type: 'error', message: 'Mật khẩu cũ chưa đúng!');
+            } else {
+                $user->password = $this->new_password;
+                $user->save();
+                $this->dispatch('alert', type: 'success', message: 'Cập nhật thành công!');
+            }
+
+        } catch (Exception $e) {
+            Log::error('Error update user', [
+                'method' => __METHOD__,
+                'message' => $e->getMessage()
+            ]);
+            $this->dispatch('alert', type: 'error', message: 'Cập nhật thất bại!');
+        }
     }
 }
